@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 public interface Player {
 	/**
 	 * Retrieves the entity this interface is implemented in.
+	 *
 	 * @return the requested entity.
 	 */
 	default ServerPlayerEntity target() {
@@ -24,8 +25,9 @@ public interface Player {
 
 	/**
 	 * Retrieves a player from a player entity.
+	 *
 	 * @param entity the specified entity.
- 	 * @return the requested player.
+	 * @return the requested player.
 	 */
 	static Player of(PlayerEntity entity) {
 		return (Player) entity;
@@ -33,6 +35,7 @@ public interface Player {
 
 	/**
 	 * Retrieves a player from a command source.
+	 *
 	 * @param source the specified source.
 	 * @return the requested player.
 	 */
@@ -46,6 +49,7 @@ public interface Player {
 
 	/**
 	 * Retrieves a player from a command context.
+	 *
 	 * @param context the specified context.
 	 * @return the requested player.
 	 */
@@ -55,6 +59,7 @@ public interface Player {
 
 	/**
 	 * Retrieves the UUID of this player.
+	 *
 	 * @return the requested UUID.
 	 */
 	default String getUuid() {
@@ -63,6 +68,7 @@ public interface Player {
 
 	/**
 	 * Retrieves the name of this player.
+	 *
 	 * @return the requested name.
 	 */
 	default String getName() {
@@ -71,6 +77,7 @@ public interface Player {
 
 	/**
 	 * Retrieves the stack held by this player.
+	 *
 	 * @return the requested stack.
 	 */
 	default ItemStack getHeldStack() {
@@ -79,6 +86,7 @@ public interface Player {
 
 	/**
 	 * Sets the stack held by this player.
+	 *
 	 * @param stack the specified stack.
 	 */
 	default void setHeldStack(ItemStack stack) {
@@ -87,6 +95,7 @@ public interface Player {
 
 	/**
 	 * Retrieves the position of this player.
+	 *
 	 * @return the requested position.
 	 */
 	default Position getPosition() {
@@ -95,6 +104,7 @@ public interface Player {
 
 	/**
 	 * Sets the position of this player.
+	 *
 	 * @param position the specified position.
 	 */
 	default void setPosition(Position position) {
@@ -103,6 +113,7 @@ public interface Player {
 
 	/**
 	 * Retrieves the game mode of this player.
+	 *
 	 * @return the requested game mode.
 	 */
 	default GameMode getGameMode() {
@@ -111,6 +122,7 @@ public interface Player {
 
 	/**
 	 * Sets the game mode of this player.
+	 *
 	 * @param gameMode the specified game mode.
 	 */
 	default void setGameMode(GameMode gameMode) {
@@ -120,8 +132,9 @@ public interface Player {
 
 	/**
 	 * Sends a chat message to this player.
+	 *
 	 * @param message the specified message.
-	 * @param type the specified message's type.
+	 * @param type    the specified message's type.
 	 */
 	default void sendChatMessage(Text message, MessageType type) {
 		target().sendChatMessage(message, type);
@@ -129,6 +142,7 @@ public interface Player {
 
 	/**
 	 * Sends a chat message to this player.
+	 *
 	 * @param message the specified message.
 	 */
 	default void sendChatMessage(Text message) {
@@ -137,6 +151,7 @@ public interface Player {
 
 	/**
 	 * Sends a message to this player.
+	 *
 	 * @param message the specified message.
 	 */
 	default void sendMessage(Text message) {
@@ -145,6 +160,7 @@ public interface Player {
 
 	/**
 	 * Retrieves the world this player is in.
+	 *
 	 * @return the requested world.
 	 */
 	default World getWorld() {
@@ -154,6 +170,7 @@ public interface Player {
 	/**
 	 * Retrieves the inventory component of
 	 * this entity.
+	 *
 	 * @return the requested component.
 	 */
 	default InventoryComponent getInventory() {
@@ -163,6 +180,7 @@ public interface Player {
 	/**
 	 * Retrieves the ender chest inventory
 	 * component of this entity.
+	 *
 	 * @return the requested component.
 	 */
 	default InventoryComponent getEnderChestInventory() {

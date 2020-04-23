@@ -1,7 +1,6 @@
 package com.github.vini2003.spork.api.manager;
 
 import com.github.vini2003.spork.api.lobby.Lobby;
-import net.minecraft.util.Tickable;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -16,6 +15,7 @@ public class LobbyManager {
 
 	/**
 	 * Adds a lobby to this manager.
+	 *
 	 * @param lobby the specified lobby.
 	 */
 	public static void add(Lobby lobby) {
@@ -24,6 +24,7 @@ public class LobbyManager {
 
 	/**
 	 * Removes a lobby from this manager.
+	 *
 	 * @param lobby the specified lobby.
 	 */
 	public static void remove(Lobby lobby) {
@@ -32,6 +33,7 @@ public class LobbyManager {
 
 	/**
 	 * Removes a lobby from this manager by its name.
+	 *
 	 * @param name the specified lobby's name.
 	 */
 	public static void remove(String name) {
@@ -40,6 +42,7 @@ public class LobbyManager {
 
 	/**
 	 * Retrieves a lobby from this manager by its name.
+	 *
 	 * @param name the specified lobby's name.
 	 */
 	public static Lobby getLobby(String name) {
@@ -48,6 +51,7 @@ public class LobbyManager {
 
 	/**
 	 * Retrieves the names of all known lobbies.
+	 *
 	 * @return the requested names.
 	 */
 	public static Collection<String> getNames() {
@@ -57,6 +61,7 @@ public class LobbyManager {
 	/**
 	 * Asserts whether a given lobby exists
 	 * in this manager's lobbies by its name.
+	 *
 	 * @param name the specified lobby's name.
 	 * @return true if yes; false if no.
 	 */
@@ -67,6 +72,7 @@ public class LobbyManager {
 	/**
 	 * Retrieves the size of the lobbies managed
 	 * by this manager.
+	 *
 	 * @return the requested size.
 	 */
 	public static int size() {

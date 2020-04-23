@@ -14,14 +14,21 @@ import java.util.Collection;
 public interface WorldUtilities {
 	World getWorld();
 
+	/**
+	 * Instantiates a world utilities on a world.
+	 *
+	 * @param world the specified world.
+	 * @return      the requested world utilities.
+	 */
 	static WorldUtilities of(World world) {
 		return (WorldUtilities) world;
 	}
 
 	/**
 	 * Sets the block in a given position to the specified block.
+	 *
 	 * @param position the specified position.
-	 * @param block the specified block.
+	 * @param block    the specified block.
 	 */
 	default void setBlock(Position position, Block block) {
 		getWorld().setBlockState(position.asBlockPosition(), block.getDefaultState());
@@ -29,8 +36,9 @@ public interface WorldUtilities {
 
 	/**
 	 * Sets the state in a given position to the specified state.
+	 *
 	 * @param position the specified position.
-	 * @param state the specified state.
+	 * @param state    the specified state.
 	 */
 	default void setState(Position position, BlockState state) {
 		getWorld().setBlockState(position.asBlockPosition(), state);
@@ -38,6 +46,7 @@ public interface WorldUtilities {
 
 	/**
 	 * Retrieves the block in a given position.
+	 *
 	 * @param position the specified position.
 	 * @return the requested block.
 	 */
@@ -47,6 +56,7 @@ public interface WorldUtilities {
 
 	/**
 	 * Retrieves the state in a given position.
+	 *
 	 * @param position the specified position.
 	 * @return the requested block.
 	 */
@@ -56,6 +66,7 @@ public interface WorldUtilities {
 
 	/**
 	 * Retrieves the block entity in a given position.
+	 *
 	 * @param position the specified position.
 	 * @return the requested entity.
 	 */
@@ -65,6 +76,7 @@ public interface WorldUtilities {
 
 	/**
 	 * Asserts whether a given position is loaded or not.
+	 *
 	 * @param position the specified position.
 	 * @return true if yes; false if no.
 	 */
@@ -74,6 +86,7 @@ public interface WorldUtilities {
 
 	/**
 	 * Retrieves the highest surface position in a given position.
+	 *
 	 * @param position the specified position.
 	 * @return the requested position.
 	 */
@@ -84,8 +97,9 @@ public interface WorldUtilities {
 	/**
 	 * Retrieves a collection of positions scattered
 	 * around a central point in circle form.
+	 *
 	 * @param center the specified center.
-	 * @param count the position count, and circle radius.
+	 * @param count  the position count, and circle radius.
 	 * @return the requested positions.
 	 */
 	default Collection<Position> getScatteredPositions(Position center, int count) {
@@ -107,6 +121,7 @@ public interface WorldUtilities {
 
 	/**
 	 * Adds an entity to the world.
+	 *
 	 * @param entity the specified entity.
 	 */
 	default void addEntity(Entity entity) {
@@ -115,6 +130,7 @@ public interface WorldUtilities {
 
 	/**
 	 * Removes an entity from the world.
+	 *
 	 * @param entity the specified entity.
 	 */
 	default void removeEntity(Entity entity) {

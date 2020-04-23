@@ -1,15 +1,8 @@
 package com.github.vini2003.spork.api.event.type.lobby;
 
-import com.github.vini2003.spork.api.block.BlockData;
 import com.github.vini2003.spork.api.entity.Player;
 import com.github.vini2003.spork.api.event.EventResult;
-import com.github.vini2003.spork.api.event.type.item.ItemUseEvent;
 import com.github.vini2003.spork.api.lobby.Lobby;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
 
 import java.util.HashSet;
 import java.util.Set;

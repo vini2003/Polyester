@@ -10,8 +10,9 @@ import net.minecraft.world.World;
 public class RayUtilities {
 	/**
 	 * Traces a ray for a given world, player and handling context.
-	 * @param world the specified world.
-	 * @param player the specified player, eyesight used for ray trace.
+	 *
+	 * @param world         the specified world.
+	 * @param player        the specified player, eyesight used for ray trace.
 	 * @param fluidHandling the specified context.
 	 * @return the requested hit result.
 	 */
@@ -25,7 +26,7 @@ public class RayUtilities {
 		float magicD = MathHelper.sin(-pitch * 0.017453292F);
 		float magicE = magicB * magicC;
 		float magicF = magicA * magicC;
-		Vec3d vecB = vecA.add((double)magicE * 5.0D, (double)magicD * 5.0D, (double)magicF * 5.0D);
+		Vec3d vecB = vecA.add((double) magicE * 5.0D, (double) magicD * 5.0D, (double) magicF * 5.0D);
 		return world.rayTrace(new RayTraceContext(vecA, vecB, RayTraceContext.ShapeType.OUTLINE, fluidHandling, player));
 	}
 }

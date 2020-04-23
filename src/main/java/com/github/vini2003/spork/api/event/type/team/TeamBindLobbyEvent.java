@@ -1,6 +1,5 @@
 package com.github.vini2003.spork.api.event.type.team;
 
-import com.github.vini2003.spork.api.entity.Player;
 import com.github.vini2003.spork.api.event.EventResult;
 import com.github.vini2003.spork.api.lobby.Lobby;
 import com.github.vini2003.spork.api.team.Team;

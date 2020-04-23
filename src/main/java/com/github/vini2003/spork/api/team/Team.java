@@ -5,8 +5,8 @@ import com.github.vini2003.spork.api.data.TrackerHolder;
 import com.github.vini2003.spork.api.entity.Player;
 import com.github.vini2003.spork.api.event.type.team.TeamBindLobbyEvent;
 import com.github.vini2003.spork.api.event.type.team.TeamUnbindLobbyEvent;
-import com.github.vini2003.spork.api.lobby.Lobby;
 import com.github.vini2003.spork.api.formatting.FormattingWrapper;
+import com.github.vini2003.spork.api.lobby.Lobby;
 import com.github.vini2003.spork.api.lobby.LobbyHolder;
 import com.github.vini2003.spork.api.player.PlayerHolder;
 import net.minecraft.text.LiteralText;
@@ -14,7 +14,10 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Tickable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -34,6 +37,7 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 	/**
 	 * Instantiates a team based on a collection of players
 	 * and default details.
+	 *
 	 * @param players the specified players.
 	 */
 	public Team(Collection<Player> players) {
@@ -44,6 +48,7 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 	/**
 	 * Instantiates a team based on a collection of players
 	 * and custom details.
+	 *
 	 * @param players the specified players.
 	 * @param details the specified details.
 	 */
@@ -54,6 +59,7 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 
 	/**
 	 * Retrieves this team's details.
+	 *
 	 * @return the requested details.
 	 */
 	public Details getDetails() {
@@ -62,6 +68,7 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 
 	/**
 	 * Retrieve this team's size.
+	 *
 	 * @return the requested size.
 	 */
 	public int size() {
@@ -143,8 +150,9 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 
 		/**
 		 * Instantiates a team's details based on custom arguments.
+		 *
 		 * @param formatting the specified formatting.
-		 * @param name the specified name.
+		 * @param name       the specified name.
 		 */
 		public Details(FormattingWrapper formatting, Text name) {
 			this(formatting, name, new LiteralText(""), new LiteralText(""));
@@ -153,10 +161,11 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 		/**
 		 * Instantiates a team's details based on custom arguments
 		 * including a prefix and a suffix.
+		 *
 		 * @param formatting the specified formatting.
-		 * @param name the specified name.
-		 * @param prefix the specified prefix.
-		 * @param suffix the specified suffix.
+		 * @param name       the specified name.
+		 * @param prefix     the specified prefix.
+		 * @param suffix     the specified suffix.
 		 */
 		public Details(FormattingWrapper formatting, Text name, Text prefix, Text suffix) {
 			this.formatting = formatting;
@@ -167,6 +176,7 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 
 		/**
 		 * Retrieves the formatting associated with this team.
+		 *
 		 * @return the requested formatting.
 		 */
 		public FormattingWrapper getFormatting() {
@@ -175,6 +185,7 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 
 		/**
 		 * Sets the formatting associated with this team.
+		 *
 		 * @param formatting the specified formatting.
 		 */
 		public void setFormatting(FormattingWrapper formatting) {
@@ -183,6 +194,7 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 
 		/**
 		 * Retrieves the name associated with this team.
+		 *
 		 * @return the requested name.
 		 */
 		public Text getName() {
@@ -191,6 +203,7 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 
 		/**
 		 * Sets the name associated with this team.
+		 *
 		 * @param name the specified name.
 		 */
 		public void setName(Text name) {
@@ -199,6 +212,7 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 
 		/**
 		 * Retrieves the prefix associated with this team.
+		 *
 		 * @return the requested prefix.
 		 */
 		public Text getPrefix() {
@@ -207,6 +221,7 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 
 		/**
 		 * Sets the prefix associated with this team.
+		 *
 		 * @param prefix the specified prefix.
 		 */
 		public void setPrefix(Text prefix) {
@@ -215,6 +230,7 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 
 		/**
 		 * Retrieves the suffix associated with this team.
+		 *
 		 * @return the requested suffix.
 		 */
 		public Text getSuffix() {
@@ -223,6 +239,7 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 
 		/**
 		 * Sets the suffix associated with this team.
+		 *
 		 * @param suffix the specified suffix.
 		 */
 		public void setSuffix(Text suffix) {
@@ -231,6 +248,7 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 
 		/**
 		 * Asserts whether this team has a prefix or not.
+		 *
 		 * @return true if yes; false if no.
 		 */
 		public boolean hasPrefix() {
@@ -239,6 +257,7 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 
 		/**
 		 * Asserts whether this team has a suffix or not.
+		 *
 		 * @return true if yes; false if no.
 		 */
 		public boolean hasSuffix() {

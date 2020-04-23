@@ -16,6 +16,7 @@ public enum EventResult {
 
 	/**
 	 * Asserts whether this result is cancelled or not.
+	 *
 	 * @return true if yes; false if no.
 	 */
 	public boolean isCancelled() {

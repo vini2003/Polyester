@@ -20,9 +20,13 @@ import java.util.Optional;
 
 @Mixin(WorldChunk.class)
 public class WorldChunkMixin {
-	@Shadow @Final private World world;
+	@Shadow
+	@Final
+	private World world;
 
-	@Shadow @Final private ChunkPos pos;
+	@Shadow
+	@Final
+	private ChunkPos pos;
 
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;onBlockAdded(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Z)V"), cancellable = true, method = "Lnet/minecraft/world/chunk/WorldChunk;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Z)Lnet/minecraft/block/BlockState;")
 	void onAddBlock(BlockPos position, BlockState state, boolean moved, CallbackInfoReturnable<BlockState> callbackInformationReturnable) {

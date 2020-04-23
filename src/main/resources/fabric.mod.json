@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "spork",
   "version": "${version}",
-
   "name": "Spork",
   "description": "A lightweight server-side modding API for Fabric.",
   "authors": [
@@ -12,10 +11,8 @@
     "homepage": "https://github.com/vini2003/",
     "sources": "https://github.com/vini2003/Spork/"
   },
-
   "license": "LGPLv3",
   "icon": "assets/spork/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -25,7 +22,6 @@
   "mixins": [
     "spork.mixins.json"
   ],
-
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",

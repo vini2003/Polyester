@@ -11,7 +11,6 @@ import com.github.vini2003.spork.api.queue.QueueHolder;
 import com.github.vini2003.spork.api.team.Team;
 import com.github.vini2003.spork.api.team.TeamHolder;
 import net.minecraft.util.Tickable;
-import net.minecraft.world.WorldView;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,6 +43,7 @@ public class Lobby implements QueueHolder, PlayerHolder, TeamHolder, Tickable {
 
 	/**
 	 * Retrieve this lobby's size.
+	 *
 	 * @return the requested size.
 	 */
 	public int size() {
@@ -52,6 +52,7 @@ public class Lobby implements QueueHolder, PlayerHolder, TeamHolder, Tickable {
 
 	/**
 	 * Retrieves this lobby's identifier.
+	 *
 	 * @return the requested identifier.
 	 */
 	public String getIdentifier() {
@@ -60,6 +61,7 @@ public class Lobby implements QueueHolder, PlayerHolder, TeamHolder, Tickable {
 
 	/**
 	 * Sets this lobby's identifier.
+	 *
 	 * @param identifier the specified identifier.
 	 */
 	public void setIdentifier(String identifier) {

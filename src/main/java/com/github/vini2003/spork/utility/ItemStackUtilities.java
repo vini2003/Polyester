@@ -14,6 +14,7 @@ import java.util.TreeMap;
 public class ItemStackUtilities {
 	/**
 	 * Sorts an inventory based on stack names and count.
+	 *
 	 * @param inventory the specified inventory.
 	 */
 	public static void sort(Inventory inventory) {

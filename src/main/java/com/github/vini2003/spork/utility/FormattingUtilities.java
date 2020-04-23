@@ -14,14 +14,16 @@ public class FormattingUtilities {
 
 	/**
 	 * Retrieves a random formatting.
+	 *
 	 * @return the requested formatting.
-	 * */
+	 */
 	public static Formatting getRandom() {
 		return Formatting.values()[RANDOM.nextInt(Formatting.values().length)];
 	}
 
 	/**
 	 * Retrieves a formatting by its name.
+	 *
 	 * @param name the specified name.
 	 * @return the requested formatting.
 	 */
@@ -31,6 +33,7 @@ public class FormattingUtilities {
 
 	/**
 	 * Retrieves a formatting by its code.
+	 *
 	 * @param code the specified code.
 	 * @return the requested formatting.
 	 */
@@ -40,6 +43,7 @@ public class FormattingUtilities {
 
 	/**
 	 * Retrieves a formatting by its index.
+	 *
 	 * @param index the specified index.
 	 * @return the requested formatting.
 	 */
@@ -49,6 +53,7 @@ public class FormattingUtilities {
 
 	/**
 	 * Retrieves a formatting by its color.
+	 *
 	 * @param color the specified color.
 	 * @return the requested formatting.
 	 */

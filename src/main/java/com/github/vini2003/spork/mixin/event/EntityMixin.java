@@ -24,7 +24,8 @@ public abstract class EntityMixin {
 	@Shadow
 	public World world;
 
-	@Shadow protected abstract BlockPos getLandingPos();
+	@Shadow
+	protected abstract BlockPos getLandingPos();
 
 	@Inject(at = @At("HEAD"), cancellable = true, method = "fall(DZLnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;)V")
 	void onLandOnBlock(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition, CallbackInfo callbackInformation) {

@@ -1,19 +1,18 @@
 package com.github.vini2003.spork.utility;
 
 import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashSet;
 
 public class BezierUtilities {
 	/**
 	 * Builds a Bezier curve from two points.
 	 * Current implementation needs to be reworked.
-	 * @param posA the first specified position.
-	 * @param posB the second specified position.
+	 *
+	 * @param posA     the first specified position.
+	 * @param posB     the second specified position.
 	 * @param segments the segments between both positions.
 	 * @return the dots of the requested curve.
 	 */

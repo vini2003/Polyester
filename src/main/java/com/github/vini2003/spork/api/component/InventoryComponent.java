@@ -32,6 +32,7 @@ public interface InventoryComponent {
 	/**
 	 * Retrieves contents of this inventory as
 	 * a collection of the held ItemStack copies.
+	 *
 	 * @return the retrieved collection.
 	 */
 	AbstractMap<Integer, ItemStack> getContents();
@@ -40,6 +41,7 @@ public interface InventoryComponent {
 	 * Retrieves contents of this inventory that
 	 * match a specific predicate as a collection
 	 * as ItemStack copies.
+	 *
 	 * @param predicate the specified predicate.
 	 * @return the retrieved collection.
 	 */
@@ -50,6 +52,7 @@ public interface InventoryComponent {
 	/**
 	 * Retrieves contents of this inventory as
 	 * a collection of the held ItemStack copies.
+	 *
 	 * @return the retrieved collection.
 	 */
 	default Collection<ItemStack> getContentsSimulated() {
@@ -60,6 +63,7 @@ public interface InventoryComponent {
 	 * Retrieves contents of this inventory that
 	 * match a specific predicate as a collection
 	 * as ItemStack copies.
+	 *
 	 * @param predicate the specified predicate.
 	 * @return the retrieved collection.
 	 */
@@ -71,6 +75,7 @@ public interface InventoryComponent {
 	 * Asserts whether an inventory allows insertion
 	 * of ItemStacks from a generic, non-existent
 	 * side.
+	 *
 	 * @return the specified condition.
 	 */
 	ActionResult canInsert();
@@ -79,6 +84,7 @@ public interface InventoryComponent {
 	 * Asserts whether an inventory allows extraction
 	 * of ItemStacks from a generic, non-existent
 	 * side.
+	 *
 	 * @return the specified condition.
 	 */
 	ActionResult canExtract();
@@ -87,6 +93,7 @@ public interface InventoryComponent {
 	 * Asserts whether an inventory allows insertion
 	 * of a specific ItemStack from a generic, non-
 	 * existent side.
+	 *
 	 * @param stack the specified stack.
 	 * @return the specified condition.
 	 */
@@ -96,6 +103,7 @@ public interface InventoryComponent {
 	 * Asserts whether an inventory allows extraction
 	 * of a specific ItemStack from a generic, non-
 	 * existent side.
+	 *
 	 * @param stack the specified stack.
 	 * @return SUCCESS if yes; FAIL if not.
 	 */
@@ -104,6 +112,7 @@ public interface InventoryComponent {
 	/**
 	 * Asserts whether an inventory allows insertion
 	 * of a generic ItemStack into a specific slot.
+	 *
 	 * @param slot the specified slot.
 	 * @return the specified condition.
 	 */
@@ -112,6 +121,7 @@ public interface InventoryComponent {
 	/**
 	 * Asserts whether an inventory allows extraction
 	 * of a generic ItemStack from a specific slot.
+	 *
 	 * @param slot the specified slot.
 	 * @return SUCCESS if yes; FAIL if not.
 	 */
@@ -121,8 +131,9 @@ public interface InventoryComponent {
 	/**
 	 * Asserts whether an inventory allows insertion
 	 * of a specific ItemStack into a specific slot.
+	 *
 	 * @param stack the specified stack.
-	 * @param slot the specified slot.
+	 * @param slot  the specified slot.
 	 * @return the specified condition.
 	 */
 	ActionResult canInsert(ItemStack stack, int slot);
@@ -130,8 +141,9 @@ public interface InventoryComponent {
 	/**
 	 * Asserts whether an inventory allows extraction
 	 * of a specific ItemStack from a specific slot.
+	 *
 	 * @param stack the specified stack.
-	 * @param slot the specified slot.
+	 * @param slot  the specified slot.
 	 * @return SUCCESS if yes; FAIL if not.
 	 */
 	ActionResult canExtract(ItemStack stack, int slot);
@@ -141,6 +153,7 @@ public interface InventoryComponent {
 	 * Inserts a specific ItemStack into this
 	 * inventory if possible, from a generic,
 	 * non-existent position.
+	 *
 	 * @param stack the specified stack.
 	 * @return SUCCESS w. empty if inserted; FAIL w. stack if not.
 	 */
@@ -156,6 +169,7 @@ public interface InventoryComponent {
 	 * Extracts a specific ItemStack from this
 	 * inventory if possible, from a generic,
 	 * non-existent position.
+	 *
 	 * @param slot the slot of the specified stack.
 	 * @return SUCCESS w. stack if extracted; FAIL w. empty if not.
 	 */
@@ -174,6 +188,7 @@ public interface InventoryComponent {
 	 * inventory if possible, from a generic,
 	 * non-existent position, the count inserted
 	 * depending on the specified count.
+	 *
 	 * @param stack the specified stack.
 	 * @param count the specified count.
 	 * @return SUCCESS w. modified stack if inserted; FAIL w. unmodified stack if not.
@@ -183,13 +198,13 @@ public interface InventoryComponent {
 		Optional<Map.Entry<Integer, ItemStack>> matchingStackOptional = getContents().entrySet().stream().filter(entry -> {
 			ItemStack storedStack = entry.getValue();
 
-			return     ((storedStack.getItem() == finalStack.getItem()
-					&&	 storedStack.getMaxCount() - storedStack.getCount() >= count
+			return ((storedStack.getItem() == finalStack.getItem()
+					&& storedStack.getMaxCount() - storedStack.getCount() >= count
 					&& (!storedStack.hasTag() && !finalStack.hasTag()) || (storedStack.hasTag() && finalStack.hasTag() && storedStack.getTag().equals(finalStack.getTag()))) || storedStack.isEmpty())
-					&&   canInsert(finalStack).isAccepted();
+					&& canInsert(finalStack).isAccepted();
 		}).findFirst();
 
-		if (matchingStackOptional.isPresent() &&  matchingStackOptional.get().getValue().getMaxCount() - stack.getCount() >= count) {
+		if (matchingStackOptional.isPresent() && matchingStackOptional.get().getValue().getMaxCount() - stack.getCount() >= count) {
 			ItemStack matchingStack = matchingStackOptional.get().getValue();
 			if (matchingStack.isEmpty()) {
 				matchingStack = stack.copy();
@@ -210,7 +225,8 @@ public interface InventoryComponent {
 	 * inventory if possible, from a generic
 	 * non-existent position, the count extracted
 	 * depending on the specified count.
-	 * @param slot the slot of the specified stack.
+	 *
+	 * @param slot  the slot of the specified stack.
 	 * @param count the specified count.
 	 * @return SUCCESS w. stack if extracted; FAIL w. empty if not.
 	 */
@@ -238,6 +254,7 @@ public interface InventoryComponent {
 	 * that match a given predicate as a
 	 * collection, from a generic non-existent
 	 * position.
+	 *
 	 * @param predicate the specified predicate.
 	 * @return SUCCESS w. the retrieved collection if extracted anything; FAIL w. empty if not.
 	 */
@@ -268,9 +285,10 @@ public interface InventoryComponent {
 	 * in slots within the range are serialized.
 	 * If a subtag is specified, the inventory
 	 * is written to the subtag.
-	 * @param tag the specified tag.
+	 *
+	 * @param tag    the specified tag.
 	 * @param subtag the optional subtag.
-	 * @param range the optional range.
+	 * @param range  the optional range.
 	 */
 	default void write(InventoryComponent source, CompoundTag tag, Optional<String> subtag, Optional<Range<Integer>> range) {
 		if (source == null || source.getSize() <= 0) return;
@@ -317,9 +335,10 @@ public interface InventoryComponent {
 	 * in slots within the range are serialized.
 	 * If a subtag is passed, the inventory
 	 * is written to the subtag.
+	 *
 	 * @param source the specified source.
 	 * @param subtag the optional subtag.
-	 * @param range the optional range.
+	 * @param range  the optional range.
 	 */
 	default CompoundTag write(InventoryComponent source, Optional<String> subtag, Optional<Range<Integer>> range) {
 		CompoundTag tag = new CompoundTag();
@@ -333,10 +352,11 @@ public interface InventoryComponent {
 	 * contents are only deserialized for the
 	 * given range. If a subtag is passed,
 	 * the inventory is read form the subtag.
+	 *
 	 * @param target the specified target.
-	 * @param tag the specified tag.
+	 * @param tag    the specified tag.
 	 * @param subtag the optional subtag.
-	 * @param range the optional range.
+	 * @param range  the optional range.
 	 */
 	default void read(InventoryComponent target, CompoundTag tag, Optional<String> subtag, Optional<Range<Integer>> range) {
 		if (tag == null) return;
@@ -417,12 +437,14 @@ public interface InventoryComponent {
 	/**
 	 * Retrieves all listeners listening
 	 * to this inventory.
+	 *
 	 * @return the requested listeners.
 	 */
 	List<Consumer<InventoryComponent>> getListeners();
 
 	/**
 	 * Adds a listener to this inventory.
+	 *
 	 * @param listener the specified listener.
 	 */
 	default void addListener(Consumer<InventoryComponent> listener) {
@@ -431,6 +453,7 @@ public interface InventoryComponent {
 
 	/**
 	 * Removes a listener from this inventory.
+	 *
 	 * @param listener the specified listener.
 	 */
 	default void removeListener(Consumer<InventoryComponent> listener) {

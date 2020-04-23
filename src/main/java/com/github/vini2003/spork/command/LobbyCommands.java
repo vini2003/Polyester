@@ -4,9 +4,7 @@ import com.github.vini2003.spork.api.entity.Player;
 import com.github.vini2003.spork.api.lobby.Lobby;
 import com.github.vini2003.spork.api.manager.LobbyManager;
 import com.github.vini2003.spork.api.text.TextWrapper;
-import com.mojang.brigadier.Message;
 import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandExceptionType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
@@ -21,9 +19,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 
-import static com.mojang.brigadier.arguments.StringArgumentType.*;
-import static net.minecraft.server.command.CommandManager.literal; // literal("foo")
+import static com.mojang.brigadier.arguments.StringArgumentType.getString;
+import static com.mojang.brigadier.arguments.StringArgumentType.string;
 import static net.minecraft.server.command.CommandManager.argument;
+import static net.minecraft.server.command.CommandManager.literal;
 
 public class LobbyCommands {
 	private static final SimpleCommandExceptionType NAME_NOT_FOUND_EXCEPTION = new SimpleCommandExceptionType(() -> "Argument 'name' not found!");
@@ -35,7 +34,7 @@ public class LobbyCommands {
 	private static CompletableFuture<Suggestions> getSuggestionsBuilder(SuggestionsBuilder builder, List<String> list) {
 		String remaining = builder.getRemaining().toLowerCase(Locale.ROOT);
 
-		if(list.isEmpty()) {
+		if (list.isEmpty()) {
 			return Suggestions.empty();
 		} else {
 			list.forEach(string -> {
@@ -98,10 +97,10 @@ public class LobbyCommands {
 		Player player = Player.of(context);
 		player.sendChatMessage(
 				TextWrapper.builder()
-					.with(TextWrapper.literal("§7§o>> " + context.getInput() + "§r\n"))
-					.with(TextWrapper.translatable("text.spork.lobby_remove"))
-					.with(TextWrapper.literal(getString(context, "name")))
-				.build(), MessageType.CHAT
+						.with(TextWrapper.literal("§7§o>> " + context.getInput() + "§r\n"))
+						.with(TextWrapper.translatable("text.spork.lobby_remove"))
+						.with(TextWrapper.literal(getString(context, "name")))
+						.build(), MessageType.CHAT
 		);
 		return 1;
 	}
@@ -113,30 +112,30 @@ public class LobbyCommands {
 
 			LiteralCommandNode<ServerCommandSource> joinNode =
 					literal("join")
-						.then(argument("name", string())
-							.suggests(suggestLobbies())
-								.executes(LobbyCommands::joinLobby))
-					.build();
+							.then(argument("name", string())
+									.suggests(suggestLobbies())
+									.executes(LobbyCommands::joinLobby))
+							.build();
 
 			LiteralCommandNode<ServerCommandSource> leaveNode =
 					literal("leave")
-						.then(argument("name", string())
-							.suggests(suggestLobbies())
-								.executes(LobbyCommands::leaveLobby))
-					.build();
+							.then(argument("name", string())
+									.suggests(suggestLobbies())
+									.executes(LobbyCommands::leaveLobby))
+							.build();
 
 			LiteralCommandNode<ServerCommandSource> createNode =
 					literal("create")
-						.then(argument("name", string())
-							.executes(LobbyCommands::createLobby))
-					.build();
+							.then(argument("name", string())
+									.executes(LobbyCommands::createLobby))
+							.build();
 
 			LiteralCommandNode<ServerCommandSource> removeNode =
 					literal("remove")
-						.then(argument("name", string())
-							.suggests(suggestLobbies())
-								.executes(LobbyCommands::removeLobby))
-					.build();
+							.then(argument("name", string())
+									.suggests(suggestLobbies())
+									.executes(LobbyCommands::removeLobby))
+							.build();
 
 			dispatcher.getRoot().addChild(baseNode);
 			baseNode.addChild(joinNode);

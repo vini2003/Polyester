@@ -13,10 +13,18 @@ import java.util.Optional;
 
 @Mixin(Formatting.class)
 public class FormattingMixin implements FormattingWrapper {
-	@Shadow @Final private Integer colorValue;
-	@Shadow @Final private String name;
-	@Shadow @Final private char code;
-	@Shadow @Final private int colorIndex;
+	@Shadow
+	@Final
+	private Integer colorValue;
+	@Shadow
+	@Final
+	private String name;
+	@Shadow
+	@Final
+	private char code;
+	@Shadow
+	@Final
+	private int colorIndex;
 
 	@Override
 	public String getName() {

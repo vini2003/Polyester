@@ -5,6 +5,7 @@ import net.minecraft.util.Tickable;
 /**
  * A Tracker which tracks a given value
  * throughout time.
+ *
  * @param <T> the specified value's type.
  */
 public abstract class Tracker<T> implements Tickable {
@@ -16,6 +17,7 @@ public abstract class Tracker<T> implements Tickable {
 	/**
 	 * Instantiates a new tracker based
 	 * on a given value.
+	 *
 	 * @param value the specified value.
 	 */
 	public Tracker(T value) {
@@ -25,6 +27,7 @@ public abstract class Tracker<T> implements Tickable {
 
 	/**
 	 * Retrieves the value of this tracker.
+	 *
 	 * @return the requested value.
 	 */
 	public T getValue() {
@@ -34,6 +37,7 @@ public abstract class Tracker<T> implements Tickable {
 	/**
 	 * Sets the value of this tracker
 	 * and updates the last changed time.
+	 *
 	 * @param value the specified value.
 	 */
 	public void setValue(T value) {
@@ -44,6 +48,7 @@ public abstract class Tracker<T> implements Tickable {
 	/**
 	 * Retrieves the time since the value
 	 * was last changed.
+	 *
 	 * @return the requested time.
 	 */
 	public Time getTimeSinceLastChange() {
@@ -52,6 +57,7 @@ public abstract class Tracker<T> implements Tickable {
 
 	/**
 	 * Retrieves the time since this value was created.
+	 *
 	 * @return the requested time.
 	 */
 	public Time getTimeSinceCreation() {

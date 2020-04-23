@@ -12,6 +12,7 @@ public interface InventoryFromInventoryComponent extends Inventory {
 	/**
 	 * Retrieves the InventoryComponent this wrapper
 	 * is wrapping.
+	 *
 	 * @return the requested component.
 	 */
 	InventoryComponent getComponent();
@@ -19,6 +20,7 @@ public interface InventoryFromInventoryComponent extends Inventory {
 	/**
 	 * Builds an wrapper over the given component
 	 * for vanilla Inventory usage.
+	 *
 	 * @return the requested wrapper.
 	 */
 	static InventoryFromInventoryComponent of(InventoryComponent component) {
@@ -27,6 +29,7 @@ public interface InventoryFromInventoryComponent extends Inventory {
 
 	/**
 	 * Retrieves the inventory's size.
+	 *
 	 * @return the requested size.
 	 */
 	@Override
@@ -36,6 +39,7 @@ public interface InventoryFromInventoryComponent extends Inventory {
 
 	/**
 	 * Asserts whether inventory is empty or not.
+	 *
 	 * @return true if empty; false if not.
 	 */
 	@Override
@@ -45,6 +49,7 @@ public interface InventoryFromInventoryComponent extends Inventory {
 
 	/**
 	 * Retrieves the ItemStack in the specified slot.
+	 *
 	 * @param slot the specified slot.
 	 * @return the requested ItemStack.
 	 */
@@ -57,7 +62,8 @@ public interface InventoryFromInventoryComponent extends Inventory {
 	 * Extracts an ItemStack from the specified slot,
 	 * the count extracted depending on the specified
 	 * count.
-	 * @param slot the specified slot.
+	 *
+	 * @param slot  the specified slot.
 	 * @param count the specified count.
 	 * @return the requested ItemStack.
 	 */
@@ -76,6 +82,7 @@ public interface InventoryFromInventoryComponent extends Inventory {
 
 	/**
 	 * Removes and retrieves the ItemStack from the specified slot.
+	 *
 	 * @param slot the specified slot.
 	 * @return the retrieved ItemStack.
 	 */
@@ -87,7 +94,8 @@ public interface InventoryFromInventoryComponent extends Inventory {
 	/**
 	 * Overrides the ItemStack in the specified slot
 	 * with the specified stack.
-	 * @param slot the specified slot.
+	 *
+	 * @param slot  the specified slot.
 	 * @param stack the specified stack.
 	 */
 	@Override
@@ -117,6 +125,7 @@ public interface InventoryFromInventoryComponent extends Inventory {
 	/**
 	 * Asserts whether the specified player
 	 * can access this inventory.
+	 *
 	 * @param player the specified player.
 	 * @return true if yes; false if no.
 	 */

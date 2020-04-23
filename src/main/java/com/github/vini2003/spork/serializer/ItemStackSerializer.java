@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Level;
 public class ItemStackSerializer {
 	/**
 	 * Converts the given stack to a tag.
+	 *
 	 * @param stack the specified stack.
 	 * @return the requested tag.
 	 */
@@ -22,8 +23,9 @@ public class ItemStackSerializer {
 
 	/**
 	 * Saves the given stack to a tag.
+	 *
 	 * @param stack the given stack.
-	 * @param tag the given tag.
+	 * @param tag   the given tag.
 	 * @return the requested tag.
 	 */
 	public static CompoundTag toTag(ItemStack stack, CompoundTag tag) {
@@ -46,6 +48,7 @@ public class ItemStackSerializer {
 
 	/**
 	 * Loads a stack from a tag.
+	 *
 	 * @param tag the specified tag.
 	 * @return the requested stack.
 	 */

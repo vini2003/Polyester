@@ -7,6 +7,7 @@ package com.github.vini2003.spork.utility;
 public class IdentifierUtilities {
 	/**
 	 * Assets whether an identifier is valid or not.
+	 *
 	 * @param identifier the specified identifier.
 	 * @return true if yes; false if no.
 	 */
@@ -20,6 +21,7 @@ public class IdentifierUtilities {
 
 	/**
 	 * Assets whether an identifier's path is valid or not.
+	 *
 	 * @param path the specified path.
 	 * @return true if yes; false if no.
 	 */
@@ -31,6 +33,7 @@ public class IdentifierUtilities {
 
 	/**
 	 * Assets whether an identifier's namespace is valid or not.
+	 *
 	 * @param namespace the specified namespace.
 	 * @return true if yes; false if no.
 	 */

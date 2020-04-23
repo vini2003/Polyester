@@ -9,6 +9,7 @@ import java.util.function.Predicate;
 public interface QueueHolder {
 	/**
 	 * Retrieves the action queue managed by this holder.
+	 *
 	 * @return the requested queue.
 	 */
 	HashMap<Predicate<Lobby>, Consumer<Lobby>> getQueue();
@@ -16,8 +17,9 @@ public interface QueueHolder {
 	/**
 	 * Enqueues an action to be performed when a given predicate
 	 * is matched.
+	 *
 	 * @param predicate predicated to match.
-	 * @param action action to perform.
+	 * @param action    action to perform.
 	 */
 	default void enqueueAction(Predicate<Lobby> predicate, Consumer<Lobby> action) {
 		getQueue().put(predicate, action);
@@ -25,6 +27,7 @@ public interface QueueHolder {
 
 	/**
 	 * Unqueues a queued action, based on its predicate.
+	 *
 	 * @param predicate action to be unqueued.
 	 */
 	default void unqueueAction(Predicate<Lobby> predicate) {
@@ -33,8 +36,9 @@ public interface QueueHolder {
 
 	/**
 	 * Unqueues a queued action, based on its predicate and action.
+	 *
 	 * @param predicate predicate of action to be removed.
-	 * @param action action to be removed.
+	 * @param action    action to be removed.
 	 */
 	default void unqueueAction(Predicate<Lobby> predicate, Consumer<Lobby> action) {
 		getQueue().remove(predicate, action);

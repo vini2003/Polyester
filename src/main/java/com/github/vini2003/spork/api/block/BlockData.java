@@ -24,10 +24,11 @@ public class BlockData {
 	/**
 	 * Instantiates a new block data based on a
 	 * position, state, block and entity.
+	 *
 	 * @param position the specified position.
-	 * @param state the specified state.
-	 * @param block the specified block.
-	 * @param entity the specified entity.
+	 * @param state    the specified state.
+	 * @param block    the specified block.
+	 * @param entity   the specified entity.
 	 */
 	public BlockData(BlockPos position, BlockState state, Block block, BlockEntity entity) {
 		this.position = Position.of(position);
@@ -39,7 +40,8 @@ public class BlockData {
 	/**
 	 * Instantiates a new block data based on a
 	 * world and a hit result.
-	 * @param world the specified world.
+	 *
+	 * @param world  the specified world.
 	 * @param result the specified hit result.
 	 * @return the requested data.
 	 */
@@ -50,7 +52,8 @@ public class BlockData {
 	/**
 	 * Instantiates a new block data based on a
 	 * world and a block hit result.
-	 * @param world the specified world.
+	 *
+	 * @param world  the specified world.
 	 * @param result the specified hit result.
 	 * @return the requested data.
 	 */
@@ -66,7 +69,8 @@ public class BlockData {
 	/**
 	 * Instantiates a new block data based on a
 	 * world and a position.
-	 * @param world the specified world.
+	 *
+	 * @param world    the specified world.
 	 * @param position the specified position.
 	 * @return the requested data.
 	 */
@@ -80,6 +84,7 @@ public class BlockData {
 
 	/**
 	 * Asserts whether this data has a position or not.
+	 *
 	 * @return true if yes; false if no.
 	 */
 	public boolean hasPosition() {
@@ -88,6 +93,7 @@ public class BlockData {
 
 	/**
 	 * Asserts whether this data has a state or not.
+	 *
 	 * @return true if yes; false if no.
 	 */
 	public boolean hasState() {
@@ -96,6 +102,7 @@ public class BlockData {
 
 	/**
 	 * Asserts whether this data has a block or not.
+	 *
 	 * @return true if yes; false if no.
 	 */
 	public boolean hasBlock() {
@@ -104,6 +111,7 @@ public class BlockData {
 
 	/**
 	 * Asserts whether this data has an entity or not.
+	 *
 	 * @return true if yes; false if no.
 	 */
 	public boolean hasEntity() {
@@ -112,6 +120,7 @@ public class BlockData {
 
 	/**
 	 * Retrieves this data's position.
+	 *
 	 * @return the requested position.
 	 */
 	public Position getPosition() {
@@ -120,6 +129,7 @@ public class BlockData {
 
 	/**
 	 * Retrieves this data's state.
+	 *
 	 * @return the requested state.
 	 */
 	public BlockState getState() {
@@ -128,6 +138,7 @@ public class BlockData {
 
 	/**
 	 * Retrieves this data's block.
+	 *
 	 * @return the requested block.
 	 */
 	public Block getBlock() {
@@ -136,6 +147,7 @@ public class BlockData {
 
 	/**
 	 * Retrieves this data's entity.
+	 *
 	 * @return the requested entity.
 	 */
 	public BlockEntity getEntity() {

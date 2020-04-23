@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class TextWrapper {
 	/**
 	 * Retrieves a builder for this wrapper.
+	 *
 	 * @return the requested builder.
 	 */
 	public static Builder builder() {
@@ -25,6 +26,7 @@ public class TextWrapper {
 
 	/**
 	 * Retrieves a string as a literal text.
+	 *
 	 * @param text the specified string.
 	 * @return the requested text.
 	 */
@@ -34,6 +36,7 @@ public class TextWrapper {
 
 	/**
 	 * Retrieves a string as a translatable text.
+	 *
 	 * @param text the specified string.
 	 * @return the requested text.
 	 */
@@ -52,6 +55,7 @@ public class TextWrapper {
 
 		/**
 		 * Appends a text to this builder's arguments.
+		 *
 		 * @param text the specified text.
 		 */
 		public Builder with(Text text) {
@@ -61,6 +65,7 @@ public class TextWrapper {
 
 		/**
 		 * Appends a serializable value to this builder's arguments.
+		 *
 		 * @param serializable the specified value.
 		 */
 		public Builder with(Serializable serializable) {
@@ -70,6 +75,7 @@ public class TextWrapper {
 
 		/**
 		 * Appends a formatting to this builder's arguments.
+		 *
 		 * @param formatting the specified formatting.
 		 */
 		public Builder with(FormattingWrapper formatting) {
@@ -80,6 +86,7 @@ public class TextWrapper {
 		/**
 		 * Retrieves the final result of the build process
 		 * as a literal text.
+		 *
 		 * @return the requested text.
 		 */
 		public LiteralText build() {

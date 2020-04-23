@@ -3,6 +3,7 @@ package com.github.vini2003.spork.api.data;
 /**
  * A Range which specifies an interval
  * from a minimum to a maximum.
+ *
  * @param <T> the specified value's type.
  */
 public class Range<T extends Number> {

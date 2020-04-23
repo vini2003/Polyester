@@ -25,9 +25,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ServerPlayerInteractionManager.class)
 public class ServerPlayerInteractionManagerMixin {
-	@Shadow public ServerWorld world;
+	@Shadow
+	public ServerWorld world;
 
-	@Shadow public ServerPlayerEntity player;
+	@Shadow
+	public ServerPlayerEntity player;
 
 	@Inject(at = @At("HEAD"), cancellable = true, method = "interactBlock(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;Lnet/minecraft/util/Hand;Lnet/minecraft/util/hit/BlockHitResult;)Lnet/minecraft/util/ActionResult;")
 	void onUseBlock(PlayerEntity playerEntity, World world, ItemStack stack, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> callbackInformationReturnable) {

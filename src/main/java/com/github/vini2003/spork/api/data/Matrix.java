@@ -12,25 +12,25 @@ public class Matrix {
 
 	private static Matrix getMatrixForRotationX(double theta) {
 		return new Matrix(new double[][]{
-				{ 1, 0, 0 },
-				{ 0, Math.cos(theta), -Math.sin(theta) },
-				{ 0, Math.sin(theta),  Math.cos(theta) }
+				{1, 0, 0},
+				{0, Math.cos(theta), -Math.sin(theta)},
+				{0, Math.sin(theta), Math.cos(theta)}
 		});
 	}
 
 	private static Matrix getMatrixForRotationY(double theta) {
 		return new Matrix(new double[][]{
-				{  Math.cos(theta), 0, Math.sin(theta) },
-				{ 0, 1, 0 },
-				{ -Math.sin(theta), 0, Math.cos(theta) }
+				{Math.cos(theta), 0, Math.sin(theta)},
+				{0, 1, 0},
+				{-Math.sin(theta), 0, Math.cos(theta)}
 		});
 	}
 
 	private static Matrix getMatrixForRotationZ(double theta) {
 		return new Matrix(new double[][]{
-				{ Math.cos(theta), -Math.sin(theta), 0},
-				{ Math.sin(theta), Math.cos(theta), 0},
-				{ 0, 0, 1 }
+				{Math.cos(theta), -Math.sin(theta), 0},
+				{Math.sin(theta), Math.cos(theta), 0},
+				{0, 0, 1}
 		});
 	}
 
@@ -71,7 +71,7 @@ public class Matrix {
 	}
 
 	public Matrix rotate(double alpha, double beta, double gamma) {
-		Matrix result  = this;
+		Matrix result = this;
 		if (alpha != 0) result = result.rotateX(alpha);
 		if (beta != 0) result = result.rotateY(beta);
 		if (gamma != 0) result = result.rotateZ(gamma);

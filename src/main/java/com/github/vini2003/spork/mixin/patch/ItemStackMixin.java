@@ -12,13 +12,17 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
-	@Shadow public abstract Item getItem();
+	@Shadow
+	public abstract Item getItem();
 
-	@Shadow public abstract int getCount();
+	@Shadow
+	public abstract int getCount();
 
-	@Shadow public abstract boolean hasTag();
+	@Shadow
+	public abstract boolean hasTag();
 
-	@Shadow public abstract CompoundTag getTag();
+	@Shadow
+	public abstract CompoundTag getTag();
 
 	/**
 	 * @author vini2003

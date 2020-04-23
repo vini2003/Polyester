@@ -1,11 +1,9 @@
 package com.github.vini2003.spork.api.data;
 
-import net.minecraft.client.util.math.Matrix3f;
 import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
 
 /**
  * A Position is a basic implementation
@@ -43,7 +41,7 @@ public class Position extends Vec3d {
 		return new Position(blockPosition.getX(), blockPosition.getY(), blockPosition.getZ());
 	}
 
-	public static Position of (net.minecraft.util.math.Position position) {
+	public static Position of(net.minecraft.util.math.Position position) {
 		return new Position(position.getX(), position.getY(), position.getZ());
 	}
 
