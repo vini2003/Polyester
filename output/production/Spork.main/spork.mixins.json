@@ -1,0 +1,25 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.github.vini2003.spork.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "event.BlockItemMixin",
+    "event.EntityMixin",
+    "event.MinecraftServerMixin",
+    "event.PlayerEntityMixin",
+    "event.PlayerManagerMixin",
+    "event.ServerPlayerInteractionManagerMixin",
+    "event.WorldChunkMixin",
+    "patch.FormattingMixin",
+    "patch.ItemStackMixin"
+  ],
+  "client": [
+  ],
+  "server": [
+
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
