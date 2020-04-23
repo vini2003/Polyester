@@ -4,6 +4,8 @@
   "package": "com.github.vini2003.spork.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "world.MinecraftServerMixin",
+    "chunk.ServerChunkManagerMixin",
     "event.BlockItemMixin",
     "event.EntityMixin",
     "event.MinecraftServerMixin",
@@ -12,7 +14,8 @@
     "event.ServerPlayerInteractionManagerMixin",
     "event.WorldChunkMixin",
     "patch.FormattingMixin",
-    "patch.ItemStackMixin"
+    "patch.ItemStackMixin",
+    "registry.SimpleRegistryMixin"
   ],
   "client": [
   ],
