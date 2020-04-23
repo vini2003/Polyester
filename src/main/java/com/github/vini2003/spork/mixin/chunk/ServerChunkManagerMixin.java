@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ServerChunkManagerMixin {
 	@Shadow @Final private ServerWorld world;
 
-	@Inject(at = @At("HEAD"), method = "save(Z)V")
+	@Inject(at = @At("HEAD"), method = "save(Z)V", cancellable = true)
 	void onSave(boolean flush, CallbackInfo callbackInformation) {
 		if (world.dimension instanceof ImplementedDimension) {
 			if (((ImplementedDimension) world.dimension).getState().shouldReset()) callbackInformation.cancel();

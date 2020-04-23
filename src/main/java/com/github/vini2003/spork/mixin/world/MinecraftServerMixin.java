@@ -3,6 +3,7 @@ package com.github.vini2003.spork.mixin.world;
 import com.github.vini2003.spork.Spork;
 import com.github.vini2003.spork.api.dimension.DimensionState;
 import com.github.vini2003.spork.api.dimension.ImplementedDimension;
+import com.github.vini2003.spork.api.server.MinecraftServerWrapper;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.WorldGenerationProgressListener;
 import net.minecraft.server.world.SecondaryServerWorld;
@@ -28,7 +29,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @Mixin(MinecraftServer.class)
-public abstract class MinecraftServerMixin {
+public abstract class MinecraftServerMixin implements MinecraftServerWrapper {
 	@Shadow @Final private Map<DimensionType, ServerWorld> worlds;
 
 	@Shadow @Final private DisableableProfiler profiler;
@@ -51,9 +52,9 @@ public abstract class MinecraftServerMixin {
 
 	@Inject(method = "getWorld", at = @At("RETURN"), cancellable = true)
 	void onGetWorld(DimensionType dimensionType, CallbackInfoReturnable<ServerWorld> callbackInformationReturnable) {
-		if (dimensionType == null) throw new UnsupportedOperationException("Dimension type must not be " + null + "!");
-
-		if (dimensionType != DimensionType.OVERWORLD && callbackInformationReturnable.getReturnValue() == null) {
+		if (dimensionType == null) {
+			Spork.LOGGER.log(Level.ERROR, "Dimension type must not be " + null + " - perhaps loading an unregistered dimension?");
+		} else if (dimensionType != DimensionType.OVERWORLD && callbackInformationReturnable.getReturnValue() == null) {
 			ServerWorld overworld = worlds.get(DimensionType.OVERWORLD);
 
 			if (overworld == null) throw new UnsupportedOperationException("Overworld dimension not loaded!");
@@ -78,8 +79,8 @@ public abstract class MinecraftServerMixin {
 		}
 	}
 
-	@Unique
-	void unloadWorld(ServerWorld serverWorld) {
+	@Override
+	public void unloadWorld(ServerWorld serverWorld) {
 		if (!serverWorld.getPlayers().isEmpty()) {
 			serverWorld.getPlayers().forEach(player -> {
 				player.teleport(getWorld(DimensionType.OVERWORLD), 0, 64, 0, player.pitch, player.yaw);
@@ -94,8 +95,8 @@ public abstract class MinecraftServerMixin {
 		}
 	}
 
-	@Unique
-	void resetWorld(ServerWorld serverWorld) {
+	@Override
+	public void resetWorld(ServerWorld serverWorld) {
 		serverWorld.savingDisabled = true;
 
 		try {

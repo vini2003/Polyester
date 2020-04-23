@@ -12,6 +12,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 
 public interface Player {
 	/**
@@ -165,6 +166,15 @@ public interface Player {
 	 */
 	default World getWorld() {
 		return target().getEntityWorld();
+	}
+
+	/**
+	 * Retrieves the dimension this player is in.
+	 *
+	 * @return the requested dimension.
+	 */
+	default DimensionType getDimension() {
+		return target().dimension;
 	}
 
 	/**
