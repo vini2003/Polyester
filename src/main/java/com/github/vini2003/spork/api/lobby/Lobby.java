@@ -11,6 +11,7 @@ import com.github.vini2003.spork.api.queue.QueueHolder;
 import com.github.vini2003.spork.api.team.Team;
 import com.github.vini2003.spork.api.team.TeamHolder;
 import net.minecraft.util.Tickable;
+import org.apache.commons.lang3.mutable.MutableInt;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,8 +38,20 @@ public class Lobby implements QueueHolder, PlayerHolder, TeamHolder, Tickable {
 
 	private final HashMap<Predicate<Lobby>, Consumer<Lobby>> queue = new HashMap<>();
 
+	private final Tracker<MutableInt> time = new Tracker<MutableInt>(new MutableInt()) {
+		@Override
+		public void tick() {
+			getValue().add(1);
+		}
+	};
+
 	public Lobby(String identifier) {
 		setIdentifier(identifier);
+		trackers.add(time);
+	}
+
+	public Tracker<MutableInt> getTime() {
+		return time;
 	}
 
 	/**
@@ -81,12 +94,14 @@ public class Lobby implements QueueHolder, PlayerHolder, TeamHolder, Tickable {
 	public void bindPlayer(Player player) {
 		if (LobbyBindPlayerEvent.dispatch(this, player).isCancelled()) return;
 		this.players.add(player);
+		player.bindLobby(this);
 	}
 
 	@Override
 	public void unbindPlayer(Player player) {
 		if (LobbyUnbindPlayerEvent.dispatch(this, player).isCancelled()) return;
 		this.players.remove(player);
+		player.unbindLobby();
 	}
 
 	/*

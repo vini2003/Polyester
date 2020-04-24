@@ -23,6 +23,10 @@ public class PlayerDisconnectEvent {
 		LISTENERS.add(listener);
 	}
 
+	public static void unregister(Listener listener) {
+		LISTENERS.remove(listener);
+	}
+
 	public static EventResult dispatch(Player player) {
 		if (player.getWorld() instanceof ClientWorld) return EventResult.CONTINUE;
 

@@ -25,6 +25,10 @@ public class BlockCollideEvent {
 		LISTENERS.add(listener);
 	}
 
+	public static void unregister(Listener listener) {
+		LISTENERS.remove(listener);
+	}
+
 	public static EventResult dispatch(World world, Entity entity, BlockData data) {
 		if (world instanceof ClientWorld) return EventResult.CONTINUE;
 

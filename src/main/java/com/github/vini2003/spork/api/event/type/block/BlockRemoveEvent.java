@@ -26,6 +26,10 @@ public class BlockRemoveEvent {
 		LISTENERS.add(listener);
 	}
 
+	public static void unregister(Listener listener) {
+		LISTENERS.remove(listener);
+	}
+
 	public static EventResult dispatch(World world, Optional<BlockEntity> blockEntity, BlockData data, boolean moved) {
 		if (world instanceof ClientWorld) return EventResult.CONTINUE;
 

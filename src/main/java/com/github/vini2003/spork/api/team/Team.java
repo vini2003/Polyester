@@ -88,12 +88,14 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 	public void bindLobby(Lobby lobby) {
 		if (TeamBindLobbyEvent.dispatch(this, lobby).isCancelled()) return;
 		this.lobby = lobby;
+		this.players.forEach(player -> player.bindLobby(lobby));
 	}
 
 	@Override
-	public void unbindLobby(Lobby lobby) {
+	public void unbindLobby() {
 		if (TeamUnbindLobbyEvent.dispatch(this, lobby).isCancelled()) return;
 		this.lobby = null;
+		this.players.forEach(Player::unbindLobby);
 	}
 
 	/*
@@ -108,11 +110,13 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 	@Override
 	public void bindPlayer(Player player) {
 		this.players.add(player);
+		player.bindTeam(this);
 	}
 
 	@Override
 	public void unbindPlayer(Player player) {
 		this.players.remove(player);
+		player.unbindTeam();
 	}
 
 	/*

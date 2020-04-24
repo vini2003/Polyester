@@ -16,9 +16,7 @@ public interface LobbyHolder {
 	void bindLobby(Lobby lobby);
 
 	/**
-	 * Unbinds a lobby from this holder.
-	 *
-	 * @param lobby the lobby to be unbound.
+	 * Unbinds the lobby from this holder.
 	 */
-	void unbindLobby(Lobby lobby);
+	void unbindLobby();
 }

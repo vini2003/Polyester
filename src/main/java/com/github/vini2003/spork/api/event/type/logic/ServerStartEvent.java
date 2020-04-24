@@ -22,6 +22,10 @@ public class ServerStartEvent {
 		LISTENERS.add(listener);
 	}
 
+	public static void unregister(Listener listener) {
+		LISTENERS.remove(listener);
+	}
+
 	public static EventResult dispatch(MinecraftServer server) {
 		AtomicReference<EventResult> result = new AtomicReference<>(EventResult.CONTINUE);
 

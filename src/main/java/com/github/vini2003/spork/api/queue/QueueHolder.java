@@ -43,4 +43,11 @@ public interface QueueHolder {
 	default void unqueueAction(Predicate<Lobby> predicate, Consumer<Lobby> action) {
 		getQueue().remove(predicate, action);
 	}
+
+	/**
+	 * Unqueues all queued actions.
+	 */
+	default void unqueueAllActions() {
+		getQueue().clear();
+	}
 }

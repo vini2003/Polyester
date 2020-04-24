@@ -47,6 +47,8 @@ import static net.minecraft.command.arguments.BlockPosArgumentType.blockPos;
 import static net.minecraft.command.arguments.BlockPosArgumentType.getBlockPos;
 import static net.minecraft.command.arguments.DimensionArgumentType.dimension;
 import static net.minecraft.command.arguments.DimensionArgumentType.getDimensionArgument;
+import static net.minecraft.command.arguments.IdentifierArgumentType.getIdentifier;
+import static net.minecraft.command.arguments.IdentifierArgumentType.identifier;
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
@@ -148,24 +150,24 @@ public class DimensionCommands {
 
             LiteralCommandNode<ServerCommandSource> teleportNode =
                 literal("teleport")
-                    .then(argument("name", string())
+                    .then(argument("name", identifier())
                         .suggests(suggestDimensions())
-                            .executes(context -> teleport(context, DimensionRegistry.INSTANCE.getByIdentifier(new Identifier(getString(context, "name"))), new BlockPos(0, 64, 0)))
+                            .executes(context -> teleport(context, DimensionRegistry.INSTANCE.getByIdentifier(getIdentifier(context, "name")), new BlockPos(0, 64, 0)))
                                 .then(argument("position", blockPos())
-                                    .executes(context -> teleport(context, DimensionRegistry.INSTANCE.getByIdentifier(new Identifier(getString(context, "name"))), getBlockPos(context, "position")))))
+                                    .executes(context -> teleport(context, DimensionRegistry.INSTANCE.getByIdentifier(getIdentifier(context, "name")), getBlockPos(context, "position")))))
                 .build();
 
             LiteralCommandNode<ServerCommandSource> createNode =
                     literal("create")
-                            .then(argument("name", string())
-                                .executes(context -> create(context, new Identifier(getString(context, "name")))))
+                            .then(argument("name", identifier())
+                                .executes(context -> create(context, getIdentifier(context, "name"))))
                     .build();
 
             LiteralCommandNode<ServerCommandSource> destroyNode =
                     literal("destroy")
-                            .then(argument("name", string())
+                            .then(argument("name", identifier())
                                 .suggests(suggestDimensions())
-                                    .executes(context -> destroy(context, new Identifier(getString(context, "name")))))
+                                    .executes(context -> destroy(context, getIdentifier(context, "name"))))
                     .build();
 
             dispatcher.getRoot().addChild(baseNode);

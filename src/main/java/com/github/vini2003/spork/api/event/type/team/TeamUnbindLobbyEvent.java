@@ -23,6 +23,10 @@ public class TeamUnbindLobbyEvent {
 		LISTENERS.add(listener);
 	}
 
+	public static void unregister(Listener listener) {
+		LISTENERS.remove(listener);
+	}
+
 	public static EventResult dispatch(Team team, Lobby lobby) {
 		AtomicReference<EventResult> result = new AtomicReference<>(EventResult.CONTINUE);
 

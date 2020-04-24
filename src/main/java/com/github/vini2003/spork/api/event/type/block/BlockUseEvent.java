@@ -26,6 +26,10 @@ public class BlockUseEvent {
 		LISTENERS.add(listener);
 	}
 
+	public static void unregister(Listener listener) {
+		LISTENERS.remove(listener);
+	}
+
 	public static EventResult dispatch(World world, Player player, BlockData data, Hand hand) {
 		if (world instanceof ClientWorld) return EventResult.CONTINUE;
 

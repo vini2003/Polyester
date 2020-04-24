@@ -1,22 +1,22 @@
-package com.github.vini2003.spork.api.event.type.block;
+package com.github.vini2003.spork.api.event.type.player;
 
-import com.github.vini2003.spork.api.block.BlockData;
+import com.github.vini2003.spork.api.entity.Player;
 import com.github.vini2003.spork.api.event.EventResult;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
-import net.minecraft.world.World;
+import net.minecraft.entity.damage.DamageSource;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * An event dispatched when a
- * block is landed on by an entity.
+ * An event called when a
+ * player is damaged.
  */
-public class BlockLandEvent {
+public class PlayerDamageEvent {
 	public interface Listener {
-		EventResult receive(World world, Entity entity, BlockData data, float distance);
+		EventResult receive(Player player, DamageSource source, float amount);
 	}
 
 	private static final Set<Listener> LISTENERS = new HashSet<>();
@@ -29,13 +29,13 @@ public class BlockLandEvent {
 		LISTENERS.remove(listener);
 	}
 
-	public static EventResult dispatch(World world, Entity entity, BlockData data, float distance) {
-		if (world instanceof ClientWorld) return EventResult.CONTINUE;
+	public static EventResult dispatch(Player player, DamageSource source, float amount) {
+		if (player.getWorld() instanceof ClientWorld) return EventResult.CONTINUE;
 
 		AtomicReference<EventResult> result = new AtomicReference<>(EventResult.CONTINUE);
 
 		LISTENERS.forEach(listener -> {
-			if (listener.receive(world, entity, data, distance).isCancelled()) {
+			if (listener.receive(player, source, amount).isCancelled()) {
 				result.set(EventResult.CANCEL);
 			}
 		});

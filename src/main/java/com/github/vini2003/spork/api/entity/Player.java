@@ -3,6 +3,8 @@ package com.github.vini2003.spork.api.entity;
 import com.github.vini2003.spork.api.component.InventoryComponent;
 import com.github.vini2003.spork.api.component.InventoryComponentFromInventory;
 import com.github.vini2003.spork.api.data.Position;
+import com.github.vini2003.spork.api.lobby.Lobby;
+import com.github.vini2003.spork.api.team.Team;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -15,6 +17,44 @@ import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 
 public interface Player {
+	/**
+	 * Retrieves the lobby this player is bound to.
+	 *
+	 * @return the requested lobby.
+	 */
+	Lobby getLobby();
+
+	/**
+	 * Binds the lobby this player is attached to.
+	 *
+	 * @param lobby the specified lobby.
+	 */
+	void bindLobby(Lobby lobby);
+
+	/**
+	 * Unbinds the lobby this player is attached to.
+	 */
+	void unbindLobby();
+
+	/**
+	 * Retrieves the team this player is bound to.
+	 *
+	 * @return the requested team.
+	 */
+	Team getTeam();
+
+	/**
+	 * Binds the team this player is bound to.
+	 *
+	 * @param team the specified team.
+	 */
+	void bindTeam(Team team);
+
+	/**
+	 * unbinds the team this player is bound to.
+	 */
+	void unbindTeam();
+
 	/**
 	 * Retrieves the entity this interface is implemented in.
 	 *

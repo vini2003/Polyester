@@ -23,6 +23,10 @@ public class EntityRemoveEvent {
 		LISTENERS.add(listener);
 	}
 
+	public static void unregister(Listener listener) {
+		LISTENERS.remove(listener);
+	}
+
 	public static EventResult dispatch(Entity entity) {
 		if (entity.world instanceof ClientWorld) return EventResult.CONTINUE;
 

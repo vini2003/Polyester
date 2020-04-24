@@ -5,9 +5,12 @@ import com.github.vini2003.spork.api.event.type.block.BlockCollideEvent;
 import com.github.vini2003.spork.api.event.type.block.BlockLandEvent;
 import com.github.vini2003.spork.api.event.type.block.BlockStepEvent;
 import com.github.vini2003.spork.api.event.type.entity.EntityRemoveEvent;
+import com.github.vini2003.spork.api.event.type.stack.StackDropEvent;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.MovementType;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
@@ -17,6 +20,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(Entity.class)
@@ -55,5 +59,18 @@ public abstract class EntityMixin {
 		if (BlockStepEvent.dispatch(this.world, (Entity) (Object) this, BlockData.of(world, this.getLandingPos())).isCancelled()) {
 			callbackInformation.cancel();
 		}
+	}
+
+	@Inject(at = @At("HEAD"), method = "Lnet/minecraft/entity/Entity;dropStack(Lnet/minecraft/item/ItemStack;F)Lnet/minecraft/entity/ItemEntity;")
+	void onDropStack(ItemStack stack, float yOffset, CallbackInfoReturnable<ItemEntity> callbackInformationReturnable) {
+		if (StackDropEvent.dispatch((Entity) (Object) this, stack).isCancelled()) {
+			callbackInformationReturnable.setReturnValue(null);
+			callbackInformationReturnable.cancel();
+		}
+	}
+
+	@Inject(at = @At("HEAD"), method = "Lnet/minecraft/entity/Entity;move(Lnet/minecraft/entity/MovementType;Lnet/minecraft/util/math/Vec3d;)V")
+	void onMove(MovementType type, Vec3d movement) {
+
 	}
 }

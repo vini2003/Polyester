@@ -27,6 +27,10 @@ public class ItemUseEvent {
 		LISTENERS.add(listener);
 	}
 
+	public static void unregister(Listener listener) {
+		LISTENERS.remove(listener);
+	}
+
 	public static EventResult dispatch(World world, PlayerEntity player, BlockData data, ItemStack stack, Hand hand) {
 		if (world instanceof ClientWorld) return EventResult.CONTINUE;
 

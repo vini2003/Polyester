@@ -27,6 +27,10 @@ public class BlockPlaceEvent {
 		LISTENERS.add(listener);
 	}
 
+	public static void unregister(Listener listener) {
+		LISTENERS.remove(listener);
+	}
+
 	public static EventResult dispatch(World world, Optional<LivingEntity> placer, BlockData data, ItemStack stack) {
 		if (world instanceof ClientWorld) return EventResult.CONTINUE;
 
