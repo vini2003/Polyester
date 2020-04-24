@@ -16,7 +16,8 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.vini2003.spork.Spork"
+      "com.github.vini2003.spork.Spork",
+      "com.github.vini2003.example.Example"
     ]
   },
   "mixins": [

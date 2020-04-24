@@ -17,4 +17,6 @@ public abstract class Preset {
 	public abstract void apply(Lobby lobby);
 
 	public abstract void retract(Lobby lobby);
+
+	public abstract void restart(Lobby lobby);
 }

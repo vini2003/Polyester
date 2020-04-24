@@ -2,20 +2,22 @@ package com.github.vini2003.spork.api.lobby;
 
 import com.github.vini2003.spork.api.data.Tracker;
 import com.github.vini2003.spork.api.entity.Player;
+import com.github.vini2003.spork.api.event.type.Event;
 import com.github.vini2003.spork.api.event.type.lobby.LobbyBindPlayerEvent;
 import com.github.vini2003.spork.api.event.type.lobby.LobbyBindTeamEvent;
 import com.github.vini2003.spork.api.event.type.lobby.LobbyUnbindPlayerEvent;
 import com.github.vini2003.spork.api.event.type.lobby.LobbyUnbindTeamEvent;
 import com.github.vini2003.spork.api.player.PlayerHolder;
+import com.github.vini2003.spork.api.preset.Preset;
+import com.github.vini2003.spork.api.preset.PresetHolder;
 import com.github.vini2003.spork.api.queue.QueueHolder;
 import com.github.vini2003.spork.api.team.Team;
 import com.github.vini2003.spork.api.team.TeamHolder;
+import com.github.vini2003.spork.api.world.DimensionHolder;
 import net.minecraft.util.Tickable;
-import org.apache.commons.lang3.mutable.MutableInt;
+import net.minecraft.world.dimension.Dimension;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -27,21 +29,27 @@ import java.util.function.Predicate;
  * scheduled events for the given
  * player group.
  */
-public class Lobby implements QueueHolder, PlayerHolder, TeamHolder, Tickable {
+public class Lobby implements QueueHolder, DimensionHolder, PresetHolder, PlayerHolder, TeamHolder, Tickable {
 	private String identifier;
 
-	private final ArrayList<Team> teams = new ArrayList<>();
+	private Dimension dimension;
 
-	private final ArrayList<Player> players = new ArrayList<>();
+	private Preset preset;
 
-	private final ArrayList<Tracker<?>> trackers = new ArrayList<>();
+	private final List<Team> teams = new ArrayList<>();
 
-	private final HashMap<Predicate<Lobby>, Consumer<Lobby>> queue = new HashMap<>();
+	private final List<Player> players = new ArrayList<>();
 
-	private final Tracker<MutableInt> time = new Tracker<MutableInt>(new MutableInt()) {
+	private final List<Tracker<?>> trackers = new ArrayList<>();
+
+	private final Map<Predicate<Lobby>, Consumer<Lobby>> queue = new HashMap<>();
+
+	private final Map<Class<? extends Event<?>>, Event<?>> events = new HashMap<>();
+
+	private final Tracker<Integer> time = new Tracker<Integer>(0) {
 		@Override
 		public void tick() {
-			getValue().add(1);
+			setValue(getValue() + 1);
 		}
 	};
 
@@ -50,7 +58,7 @@ public class Lobby implements QueueHolder, PlayerHolder, TeamHolder, Tickable {
 		trackers.add(time);
 	}
 
-	public Tracker<MutableInt> getTime() {
+	public Tracker<Integer> getTime() {
 		return time;
 	}
 
@@ -82,11 +90,49 @@ public class Lobby implements QueueHolder, PlayerHolder, TeamHolder, Tickable {
 	}
 
 	/*
+	 * Implement DimensionHolder.
+	 */
+
+	@Override
+	public Dimension getDimension() {
+		return dimension;
+	}
+
+	@Override
+	public void bindDimension(Dimension dimension) {
+		this.dimension = dimension;
+	}
+
+	@Override
+	public void unbindPlayer(Dimension dimension) {
+		this.dimension = null;
+	}
+
+	/*
+	 * Implement PresetHolder.
+	 */
+
+	@Override
+	public Preset getPreset() {
+		return preset;
+	}
+
+	@Override
+	public void bindPreset(Preset preset) {
+		this.preset = preset;
+	}
+
+	@Override
+	public void unbindPreset(Preset preset) {
+		this.preset = null;
+	}
+
+	/*
 	 * Implement PlayerHolder.
 	 */
 
 	@Override
-	public ArrayList<Player> getPlayers() {
+	public Collection<Player> getPlayers() {
 		return players;
 	}
 
@@ -127,7 +173,7 @@ public class Lobby implements QueueHolder, PlayerHolder, TeamHolder, Tickable {
 	 */
 
 	@Override
-	public HashMap<Predicate<Lobby>, Consumer<Lobby>> getQueue() {
+	public Map<Predicate<Lobby>, Consumer<Lobby>> getQueue() {
 		return queue;
 	}
 

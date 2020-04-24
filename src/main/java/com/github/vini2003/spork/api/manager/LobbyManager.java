@@ -4,6 +4,7 @@ import com.github.vini2003.spork.api.lobby.Lobby;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -11,14 +12,28 @@ import java.util.stream.Collectors;
  * lobbies.
  */
 public class LobbyManager {
-	private static final HashMap<String, Lobby> lobbies = new HashMap<>();
+	private final HashMap<String, Lobby> lobbies = new HashMap<>();
+
+	private LobbyManager() {
+	}
+
+	public static final LobbyManager INSTANCE = new LobbyManager();
+
+	/**
+	 * Retrieves all lobbies managed by this manager.
+	 *
+	 * @return lobbies the requested lobbies.
+	 */
+	public Map<String, Lobby> getLobbies() {
+		return lobbies;
+	}
 
 	/**
 	 * Adds a lobby to this manager.
 	 *
 	 * @param lobby the specified lobby.
 	 */
-	public static void add(Lobby lobby) {
+	public void add(Lobby lobby) {
 		lobbies.put(lobby.getIdentifier(), lobby);
 	}
 
@@ -27,7 +42,7 @@ public class LobbyManager {
 	 *
 	 * @param lobby the specified lobby.
 	 */
-	public static void remove(Lobby lobby) {
+	public void remove(Lobby lobby) {
 		lobbies.remove(lobby.getIdentifier(), lobby);
 	}
 
@@ -36,7 +51,7 @@ public class LobbyManager {
 	 *
 	 * @param name the specified lobby's name.
 	 */
-	public static void remove(String name) {
+	public void remove(String name) {
 		lobbies.remove(name);
 	}
 
@@ -45,7 +60,7 @@ public class LobbyManager {
 	 *
 	 * @param name the specified lobby's name.
 	 */
-	public static Lobby getLobby(String name) {
+	public Lobby getLobby(String name) {
 		return lobbies.get(name);
 	}
 
@@ -54,7 +69,7 @@ public class LobbyManager {
 	 *
 	 * @return the requested names.
 	 */
-	public static Collection<String> getNames() {
+	public Collection<String> getNames() {
 		return lobbies.values().stream().map(Lobby::getIdentifier).collect(Collectors.toList());
 	}
 
@@ -65,7 +80,7 @@ public class LobbyManager {
 	 * @param name the specified lobby's name.
 	 * @return true if yes; false if no.
 	 */
-	public static boolean exists(String name) {
+	public boolean exists(String name) {
 		return getLobby(name) != null;
 	}
 
@@ -75,14 +90,14 @@ public class LobbyManager {
 	 *
 	 * @return the requested size.
 	 */
-	public static int size() {
+	public int size() {
 		return lobbies.size();
 	}
 
 	/**
 	 * Propagates ticks for each lobby.
 	 */
-	public static void tick() {
+	public void tick() {
 		lobbies.values().forEach(Lobby::tick);
 	}
 }

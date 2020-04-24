@@ -3,6 +3,7 @@ package com.github.vini2003.spork.api.queue;
 import com.github.vini2003.spork.api.lobby.Lobby;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -12,7 +13,7 @@ public interface QueueHolder {
 	 *
 	 * @return the requested queue.
 	 */
-	HashMap<Predicate<Lobby>, Consumer<Lobby>> getQueue();
+	Map<Predicate<Lobby>, Consumer<Lobby>> getQueue();
 
 	/**
 	 * Enqueues an action to be performed when a given predicate

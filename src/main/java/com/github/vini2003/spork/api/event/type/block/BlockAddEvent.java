@@ -2,6 +2,9 @@ package com.github.vini2003.spork.api.event.type.block;
 
 import com.github.vini2003.spork.api.block.BlockData;
 import com.github.vini2003.spork.api.event.EventResult;
+import com.github.vini2003.spork.api.event.type.Event;
+import com.github.vini2003.spork.api.lobby.Lobby;
+import com.github.vini2003.spork.api.manager.LobbyManager;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.world.World;
 
@@ -14,7 +17,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * block is added.
  */
 public class BlockAddEvent {
-	public interface Listener {
+	interface Listener {
 		EventResult receive(World world, BlockData data, boolean moved);
 	}
 

@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class PlayerMoveEvent {
 	public interface Listener {
-		EventResult receive(MovementType type, Vec3d movement);
+		EventResult receive(Player player, MovementType type, Vec3d movement);
 	}
 
 	private static final Set<Listener> LISTENERS = new HashSet<>();
@@ -27,11 +27,11 @@ public class PlayerMoveEvent {
 		LISTENERS.remove(listener);
 	}
 
-	public static EventResult dispatch(MovementType type, Vec3d movement) {
+	public static EventResult dispatch(Player player, MovementType type, Vec3d movement) {
 		AtomicReference<EventResult> result = new AtomicReference<>(EventResult.CONTINUE);
 
 		LISTENERS.forEach(listener -> {
-			if (listener.receive(type, movement).isCancelled()) {
+			if (listener.receive(player, type, movement).isCancelled()) {
 				result.set(EventResult.CANCEL);
 			}
 		});

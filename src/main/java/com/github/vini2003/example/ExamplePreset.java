@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 public class ExamplePreset extends Preset {
 	private static final Identifier IDENTIFIER = new Identifier("example", "preset");
 
-	private final BlockStepEvent.Listener STEP_LISTENER = ((world, entity, data) -> {
+	private final BlockStepEvent.Listener stepListener = ((world, entity, data) -> {
 		if (data.getBlock() == Blocks.GRASS_BLOCK) {
 			world.setBlockState(data.getPosition().asBlockPosition(), Blocks.SAND.getDefaultState());
 		}
@@ -29,13 +29,19 @@ public class ExamplePreset extends Preset {
 			lobby.getPlayers().forEach(player -> player.sendMessage(TextWrapper.builder().with("One minute has passed!").build()));
 		});
 
-		BlockStepEvent.register(STEP_LISTENER);
+		BlockStepEvent.register(stepListener);
 	}
 
 	@Override
 	public void retract(Lobby lobby) {
 		lobby.unqueueAllActions();
 
-		BlockStepEvent.unregister(STEP_LISTENER);
+		BlockStepEvent.unregister(stepListener);
+	}
+
+	@Override
+	public void restart(Lobby lobby) {
+		retract(lobby);
+		apply(lobby);
 	}
 }

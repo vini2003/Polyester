@@ -1,15 +1,18 @@
 package com.github.vini2003.spork.mixin.event;
 
 import com.github.vini2003.spork.api.block.BlockData;
+import com.github.vini2003.spork.api.entity.Player;
 import com.github.vini2003.spork.api.event.type.block.BlockCollideEvent;
 import com.github.vini2003.spork.api.event.type.block.BlockLandEvent;
 import com.github.vini2003.spork.api.event.type.block.BlockStepEvent;
 import com.github.vini2003.spork.api.event.type.entity.EntityRemoveEvent;
+import com.github.vini2003.spork.api.event.type.player.PlayerMoveEvent;
 import com.github.vini2003.spork.api.event.type.stack.StackDropEvent;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.MovementType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -61,7 +64,7 @@ public abstract class EntityMixin {
 		}
 	}
 
-	@Inject(at = @At("HEAD"), method = "Lnet/minecraft/entity/Entity;dropStack(Lnet/minecraft/item/ItemStack;F)Lnet/minecraft/entity/ItemEntity;")
+	@Inject(at = @At("HEAD"), method = "dropStack(Lnet/minecraft/item/ItemStack;F)Lnet/minecraft/entity/ItemEntity;")
 	void onDropStack(ItemStack stack, float yOffset, CallbackInfoReturnable<ItemEntity> callbackInformationReturnable) {
 		if (StackDropEvent.dispatch((Entity) (Object) this, stack).isCancelled()) {
 			callbackInformationReturnable.setReturnValue(null);
@@ -69,8 +72,13 @@ public abstract class EntityMixin {
 		}
 	}
 
-	@Inject(at = @At("HEAD"), method = "Lnet/minecraft/entity/Entity;move(Lnet/minecraft/entity/MovementType;Lnet/minecraft/util/math/Vec3d;)V")
-	void onMove(MovementType type, Vec3d movement) {
+	@Inject(at = @At("HEAD"), method = "move(Lnet/minecraft/entity/MovementType;Lnet/minecraft/util/math/Vec3d;)V")
+	void onMove(MovementType type, Vec3d movement, CallbackInfo callbackInformation) {
+		if (((Object) this) instanceof PlayerEntity) {
+			if (PlayerMoveEvent.dispatch(Player.of((PlayerEntity) (Object) this), type, movement).isCancelled()) {
+				callbackInformation.cancel();
+			}
+		}
 
 	}
 }
