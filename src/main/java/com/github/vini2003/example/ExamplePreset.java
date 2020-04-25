@@ -23,6 +23,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.dimension.DimensionType;
 
+import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -78,8 +79,8 @@ public class ExamplePreset extends Preset {
 
 							lobby.getTrackers().remove(sandPosition);
 
-							lobby.getWorld().removeBlock(sandPosition, false);
-							lobby.getWorld().removeBlock(tntPosition, false);
+							lobby.getWorld().setBlockState(sandPosition, Blocks.AIR.getDefaultState());
+							lobby.getWorld().setBlockState(tntPosition, Blocks.AIR.getDefaultState());
 						});
 
 						player.getLobby().enqueueAction(predicate, action);
@@ -115,6 +116,12 @@ public class ExamplePreset extends Preset {
 			if (player.hasLobby() && player.getPresetIdentifier().equals(IDENTIFIER) && !player.getWorld().isClient()) {
 				player.setGameMode(GameMode.SPECTATOR);
 
+				ArrayList<Player> players = (ArrayList<Player>) player.getLobby().getPlayers();
+
+				if (players.size() > 1) {
+					player.target().setCameraEntity(players.get(player.getWorld().random.nextInt(players.size())).target());
+				}
+
 				Lobby lobby = player.getLobby();
 
 				if (lobby.getPlayers().stream().noneMatch(member -> member.getGameMode() == GameMode.ADVENTURE)) {
@@ -126,10 +133,10 @@ public class ExamplePreset extends Preset {
 
 						member.setGameMode(GameMode.ADVENTURE);
 
-						DimensionUtilities.teleport(player.target(), lobby.getDimension(), new BlockPos(8, 26, 8));
-
-						lobby.getPreset().restart(lobby);
+						DimensionUtilities.teleport(member.target(), lobby.getDimension(), new BlockPos(8, 26, 8));
 					});
+
+					lobby.getPreset().restart(lobby);
 				}
 				return EventResult.CANCEL;
 			}
