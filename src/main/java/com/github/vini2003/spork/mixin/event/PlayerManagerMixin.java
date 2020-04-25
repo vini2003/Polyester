@@ -20,7 +20,7 @@ public class PlayerManagerMixin {
 		}
 	}
 
-	@Inject(at = @At("HEAD"), cancellable = true, method = "onPlayerConnect(Lnet/minecraft/network/ClientConnection;Lnet/minecraft/server/network/ServerPlayerEntity;)V")
+	@Inject(at = @At("RETURN"), cancellable = true, method = "onPlayerConnect(Lnet/minecraft/network/ClientConnection;Lnet/minecraft/server/network/ServerPlayerEntity;)V")
 	void onPlayerConnect(ClientConnection connection, ServerPlayerEntity player, CallbackInfo callbackInformation) {
 		if (PlayerConnectEvent.dispatch(Player.of(player)).isCancelled()) {
 			callbackInformation.cancel();

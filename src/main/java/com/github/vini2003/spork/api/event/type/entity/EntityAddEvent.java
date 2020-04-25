@@ -1,7 +1,6 @@
 package com.github.vini2003.spork.api.event.type.entity;
 
 import com.github.vini2003.spork.api.event.EventResult;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 
 import java.util.HashSet;
@@ -28,7 +27,7 @@ public class EntityAddEvent {
 	}
 
 	public static EventResult dispatch(Entity entity) {
-		if (entity.world instanceof ClientWorld) return EventResult.CONTINUE;
+		if (entity.world.isClient()) return EventResult.CONTINUE;
 
 		AtomicReference<EventResult> result = new AtomicReference<>(EventResult.CONTINUE);
 

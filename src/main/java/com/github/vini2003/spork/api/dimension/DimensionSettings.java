@@ -11,7 +11,7 @@ import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
  * These DimensionSettings are heavily based on
  * the Tesseract API by Vatuu Komalia, with
  * permission.
- *
+ * <p>
  * You can find Tesseract at: https://github.com/Vatuu/tesseract
  */
 public class DimensionSettings {

@@ -5,5 +5,13 @@
   "text.spork.lobby_remove": "Removed lobby",
   "text.spork.dimension_create": "Created dimension",
   "text.spork.dimension_destroy": "Destroyed dimension",
-  "text.spork.dimension_teleport": "Teleported to dimension"
+  "text.spork.dimension_teleport": "Teleported to dimension",
+  "text.spork.lobby_preset_set_one": "Changed preset of lobby",
+  "text.spork.lobby_preset_set_two": "to",
+  "text.spork.lobby_preset_begin_one": "Began running lobby",
+  "text.spork.lobby_preset_begin_two": "with preset",
+  "text.spork.lobby_preset_end_one": "Ended running lobby",
+  "text.spork.lobby_preset_end_two": "with preset",
+  "text.spork.lobby_preset_restart_one": "Restarted running lobby",
+  "text.spork.lobby_preset_restart_two": "with preset"
 }

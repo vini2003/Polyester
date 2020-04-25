@@ -3,7 +3,6 @@ package com.github.vini2003.spork.api.event.type.block;
 import com.github.vini2003.spork.api.block.BlockData;
 import com.github.vini2003.spork.api.event.EventResult;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.world.World;
 
 import java.util.HashSet;
@@ -31,7 +30,7 @@ public class BlockRemoveEvent {
 	}
 
 	public static EventResult dispatch(World world, Optional<BlockEntity> blockEntity, BlockData data, boolean moved) {
-		if (world instanceof ClientWorld) return EventResult.CONTINUE;
+		if (world.isClient()) return EventResult.CONTINUE;
 
 		AtomicReference<EventResult> result = new AtomicReference<>(EventResult.CONTINUE);
 

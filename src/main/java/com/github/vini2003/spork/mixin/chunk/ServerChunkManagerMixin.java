@@ -12,7 +12,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerChunkManager.class)
 public class ServerChunkManagerMixin {
-	@Shadow @Final private ServerWorld world;
+	@Shadow
+	@Final
+	private ServerWorld world;
 
 	@Inject(at = @At("HEAD"), method = "save(Z)V", cancellable = true)
 	void onSave(boolean flush, CallbackInfo callbackInformation) {

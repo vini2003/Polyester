@@ -2,7 +2,6 @@ package com.github.vini2003.spork.api.event.type.block;
 
 import com.github.vini2003.spork.api.block.BlockData;
 import com.github.vini2003.spork.api.event.EventResult;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -32,7 +31,7 @@ public class BlockPlaceEvent {
 	}
 
 	public static EventResult dispatch(World world, Optional<LivingEntity> placer, BlockData data, ItemStack stack) {
-		if (world instanceof ClientWorld) return EventResult.CONTINUE;
+		if (world.isClient()) return EventResult.CONTINUE;
 
 		AtomicReference<EventResult> result = new AtomicReference<>(EventResult.CONTINUE);
 

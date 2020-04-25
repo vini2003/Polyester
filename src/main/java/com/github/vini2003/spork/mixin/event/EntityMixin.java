@@ -10,14 +10,18 @@ import com.github.vini2003.spork.api.event.type.player.PlayerMoveEvent;
 import com.github.vini2003.spork.api.event.type.stack.StackDropEvent;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,6 +30,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Mixin(Entity.class)
 public abstract class EntityMixin {
 	@Shadow
@@ -33,6 +40,45 @@ public abstract class EntityMixin {
 
 	@Shadow
 	protected abstract BlockPos getLandingPos();
+
+	@Shadow
+	public abstract BlockPos getBlockPos();
+
+	@Shadow
+	public abstract Vec3d getPos();
+
+	@Shadow
+	public abstract Vec3d getLastNetherPortalDirectionVector();
+
+	@Shadow
+	public abstract double getY();
+
+	@Shadow
+	public abstract double getX();
+
+	@Shadow
+	public abstract double getZ();
+
+	@Shadow
+	public abstract Vec3d getVelocity();
+
+	@Shadow
+	public abstract void detach();
+
+	@Shadow
+	public DimensionType dimension;
+
+	@Shadow
+	public abstract MinecraftServer getServer();
+
+	@Shadow
+	public boolean removed;
+
+	@Shadow
+	public abstract Direction getLastNetherPortalDirection();
+
+	@Shadow
+	public abstract EntityType<?> getType();
 
 	@Inject(at = @At("HEAD"), cancellable = true, method = "fall(DZLnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;)V")
 	void onLandOnBlock(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition, CallbackInfo callbackInformation) {
@@ -57,11 +103,28 @@ public abstract class EntityMixin {
 		}
 	}
 
-	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;onSteppedOn(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/Entity;)V"), cancellable = true, method = "move(Lnet/minecraft/entity/MovementType;Lnet/minecraft/util/math/Vec3d;)V")
+	@Inject(at = @At(value = "RETURN"), cancellable = true, method = "move(Lnet/minecraft/entity/MovementType;Lnet/minecraft/util/math/Vec3d;)V")
 	void onStepOnBlock(MovementType type, Vec3d movement, CallbackInfo callbackInformation) {
-		if (BlockStepEvent.dispatch(this.world, (Entity) (Object) this, BlockData.of(world, this.getLandingPos())).isCancelled()) {
-			callbackInformation.cancel();
+		Set<BlockPos> positions = new HashSet<>();
+
+		positions.add(getLandingPos());
+		positions.add(getLandingPos().offset(Direction.EAST));
+		positions.add(getLandingPos().offset(Direction.EAST).offset(Direction.SOUTH));
+		positions.add(getLandingPos().offset(Direction.EAST).offset(Direction.NORTH));
+		positions.add(getLandingPos().offset(Direction.NORTH));
+		positions.add(getLandingPos().offset(Direction.WEST));
+		positions.add(getLandingPos().offset(Direction.WEST).offset(Direction.SOUTH));
+		positions.add(getLandingPos().offset(Direction.WEST).offset(Direction.NORTH));
+		positions.add(getLandingPos().offset(Direction.SOUTH));
+
+		for (BlockPos position : positions) {
+			if (position.isWithinDistance(getPos(), 1.1)) {
+				if (BlockStepEvent.dispatch(this.world, (Entity) (Object) this, BlockData.of(world, position)).isCancelled()) {
+					callbackInformation.cancel();
+				}
+			}
 		}
+
 	}
 
 	@Inject(at = @At("HEAD"), method = "dropStack(Lnet/minecraft/item/ItemStack;F)Lnet/minecraft/entity/ItemEntity;")
@@ -79,6 +142,5 @@ public abstract class EntityMixin {
 				callbackInformation.cancel();
 			}
 		}
-
 	}
 }

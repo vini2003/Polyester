@@ -1,6 +1,7 @@
 package com.github.vini2003.spork.api.lobby;
 
 import com.github.vini2003.spork.api.data.Tracker;
+import com.github.vini2003.spork.api.data.TrackerHolder;
 import com.github.vini2003.spork.api.entity.Player;
 import com.github.vini2003.spork.api.event.type.Event;
 import com.github.vini2003.spork.api.event.type.lobby.LobbyBindPlayerEvent;
@@ -14,10 +15,14 @@ import com.github.vini2003.spork.api.queue.QueueHolder;
 import com.github.vini2003.spork.api.team.Team;
 import com.github.vini2003.spork.api.team.TeamHolder;
 import com.github.vini2003.spork.api.world.DimensionHolder;
+import com.github.vini2003.spork.api.world.WorldHolder;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Tickable;
-import net.minecraft.world.dimension.Dimension;
+import net.minecraft.world.dimension.DimensionType;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -29,10 +34,12 @@ import java.util.function.Predicate;
  * scheduled events for the given
  * player group.
  */
-public class Lobby implements QueueHolder, DimensionHolder, PresetHolder, PlayerHolder, TeamHolder, Tickable {
-	private String identifier;
+public class Lobby implements QueueHolder, WorldHolder, DimensionHolder, PresetHolder, PlayerHolder, TeamHolder, TrackerHolder, Tickable {
+	private Identifier identifier;
 
-	private Dimension dimension;
+	private DimensionType dimension;
+
+	private ServerWorld world;
 
 	private Preset preset;
 
@@ -40,9 +47,9 @@ public class Lobby implements QueueHolder, DimensionHolder, PresetHolder, Player
 
 	private final List<Player> players = new ArrayList<>();
 
-	private final List<Tracker<?>> trackers = new ArrayList<>();
+	private final Map<Object, Tracker<?>> trackers = new HashMap<>();
 
-	private final Map<Predicate<Lobby>, Consumer<Lobby>> queue = new HashMap<>();
+	private final Map<Predicate<Lobby>, Consumer<Lobby>> queue = new ConcurrentHashMap<>();
 
 	private final Map<Class<? extends Event<?>>, Event<?>> events = new HashMap<>();
 
@@ -53,9 +60,9 @@ public class Lobby implements QueueHolder, DimensionHolder, PresetHolder, Player
 		}
 	};
 
-	public Lobby(String identifier) {
+	public Lobby(Identifier identifier) {
 		setIdentifier(identifier);
-		trackers.add(time);
+		trackers.put(identifier + "_time", time);
 	}
 
 	public Tracker<Integer> getTime() {
@@ -76,7 +83,7 @@ public class Lobby implements QueueHolder, DimensionHolder, PresetHolder, Player
 	 *
 	 * @return the requested identifier.
 	 */
-	public String getIdentifier() {
+	public Identifier getIdentifier() {
 		return identifier;
 	}
 
@@ -85,8 +92,65 @@ public class Lobby implements QueueHolder, DimensionHolder, PresetHolder, Player
 	 *
 	 * @param identifier the specified identifier.
 	 */
-	public void setIdentifier(String identifier) {
+	public void setIdentifier(Identifier identifier) {
 		this.identifier = identifier;
+	}
+
+	/**
+	 * Asserts whether this lobby has a bound preset or not.
+	 *
+	 * @return true if yes; false if no.
+	 */
+	public boolean hasPreset() {
+		return getPreset() != null;
+	}
+
+	/**
+	 * Asserts whether this lobby has a bound world or not.
+	 *
+	 * @return true if yes; false if no.
+	 */
+	public boolean hasWorld() {
+		return getWorld() != null;
+	}
+
+	/**
+	 * Asserts whether this lobby has a bound dimension or not.
+	 *
+	 * @return true if yes; false if no.
+	 */
+	public boolean hasDimension() {
+		return getDimension() != null;
+	}
+
+	/**
+	 * Unbinds everything managed by this lobby.
+	 */
+	public void unbindAll() {
+		players.forEach(this::unbindPlayer);
+		teams.forEach(this::unbindTeam);
+		unbindPreset();
+		unbindWorld();
+		unbindDimension();
+	}
+
+	/*
+	 * Implement WorldHolder.
+	 */
+
+	@Override
+	public ServerWorld getWorld() {
+		return world;
+	}
+
+	@Override
+	public void bindWorld(ServerWorld world) {
+		this.world = world;
+	}
+
+	@Override
+	public void unbindWorld() {
+		this.world = null;
 	}
 
 	/*
@@ -94,17 +158,17 @@ public class Lobby implements QueueHolder, DimensionHolder, PresetHolder, Player
 	 */
 
 	@Override
-	public Dimension getDimension() {
+	public DimensionType getDimension() {
 		return dimension;
 	}
 
 	@Override
-	public void bindDimension(Dimension dimension) {
+	public void bindDimension(DimensionType dimension) {
 		this.dimension = dimension;
 	}
 
 	@Override
-	public void unbindPlayer(Dimension dimension) {
+	public void unbindDimension() {
 		this.dimension = null;
 	}
 
@@ -123,7 +187,8 @@ public class Lobby implements QueueHolder, DimensionHolder, PresetHolder, Player
 	}
 
 	@Override
-	public void unbindPreset(Preset preset) {
+	public void unbindPreset() {
+		this.preset.retract(this);
 		this.preset = null;
 	}
 
@@ -161,11 +226,13 @@ public class Lobby implements QueueHolder, DimensionHolder, PresetHolder, Player
 	public void bindTeam(Team team) {
 		if (LobbyBindTeamEvent.dispatch(this, team).isCancelled()) return;
 		this.teams.add(team);
+		team.bindLobby(this);
 	}
 
 	public void unbindTeam(Team team) {
 		if (LobbyUnbindTeamEvent.dispatch(this, team).isCancelled()) return;
 		this.teams.remove(team);
+		team.unbindLobby();
 	}
 
 	/*
@@ -178,12 +245,20 @@ public class Lobby implements QueueHolder, DimensionHolder, PresetHolder, Player
 	}
 
 	/*
+	 * Implement TrackerHolder.
+	 */
+
+	@Override
+	public Map<Object, Tracker<?>> getTrackers() {
+		return trackers;
+	}
+	/*
 	 * Implement Tickable.
 	 */
 
 	@Override
 	public void tick() {
-		trackers.forEach((Tracker::tick));
+		trackers.forEach((key, tracker) -> tracker.tick());
 		teams.forEach(Team::tick);
 		queue.forEach((predicate, action) -> {
 			if (predicate.test(this)) action.accept(this);

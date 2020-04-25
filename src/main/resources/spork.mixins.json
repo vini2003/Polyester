@@ -16,6 +16,7 @@
     "event.WorldChunkMixin",
     "event.WorldMixin",
     "patch.FormattingMixin",
+    "patch.GameJoinS2CPacketMixin",
     "patch.ItemStackMixin",
     "registry.SimpleRegistryMixin",
     "world.MinecraftServerMixin",

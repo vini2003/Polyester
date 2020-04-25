@@ -2,18 +2,19 @@ package com.github.vini2003.spork.api.event.type.player;
 
 import com.github.vini2003.spork.api.entity.Player;
 import com.github.vini2003.spork.api.event.EventResult;
+import net.minecraft.entity.damage.DamageSource;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * An event dispatched when a
- * client connects to this server.
+ * An event called when a
+ * player is damaged.
  */
-public class PlayerConnectEvent {
+public class PlayerDeathEvent {
 	public interface Listener {
-		EventResult receive(Player player);
+		EventResult receive(Player player, DamageSource source);
 	}
 
 	private static final Set<Listener> LISTENERS = new HashSet<>();
@@ -26,13 +27,13 @@ public class PlayerConnectEvent {
 		LISTENERS.remove(listener);
 	}
 
-	public static EventResult dispatch(Player player) {
+	public static EventResult dispatch(Player player, DamageSource source) {
 		if (player.getWorld().isClient()) return EventResult.CONTINUE;
 
 		AtomicReference<EventResult> result = new AtomicReference<>(EventResult.CONTINUE);
 
 		LISTENERS.forEach(listener -> {
-			if (listener.receive(player).isCancelled()) {
+			if (listener.receive(player, source).isCancelled()) {
 				result.set(EventResult.CANCEL);
 			}
 		});

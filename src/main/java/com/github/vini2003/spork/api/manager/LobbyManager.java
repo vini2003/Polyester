@@ -1,6 +1,7 @@
 package com.github.vini2003.spork.api.manager;
 
 import com.github.vini2003.spork.api.lobby.Lobby;
+import net.minecraft.util.Identifier;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
  * lobbies.
  */
 public class LobbyManager {
-	private final HashMap<String, Lobby> lobbies = new HashMap<>();
+	private final HashMap<Identifier, Lobby> lobbies = new HashMap<Identifier, Lobby>();
 
 	private LobbyManager() {
 	}
@@ -24,7 +25,7 @@ public class LobbyManager {
 	 *
 	 * @return lobbies the requested lobbies.
 	 */
-	public Map<String, Lobby> getLobbies() {
+	public Map<Identifier, Lobby> getLobbies() {
 		return lobbies;
 	}
 
@@ -51,7 +52,13 @@ public class LobbyManager {
 	 *
 	 * @param name the specified lobby's name.
 	 */
-	public void remove(String name) {
+	public void remove(Identifier name) {
+		Lobby lobby = lobbies.get(name);
+
+		if (lobby != null) {
+
+		}
+
 		lobbies.remove(name);
 	}
 
@@ -60,7 +67,7 @@ public class LobbyManager {
 	 *
 	 * @param name the specified lobby's name.
 	 */
-	public Lobby getLobby(String name) {
+	public Lobby getLobby(Identifier name) {
 		return lobbies.get(name);
 	}
 
@@ -69,7 +76,7 @@ public class LobbyManager {
 	 *
 	 * @return the requested names.
 	 */
-	public Collection<String> getNames() {
+	public Collection<Identifier> getNames() {
 		return lobbies.values().stream().map(Lobby::getIdentifier).collect(Collectors.toList());
 	}
 
@@ -80,7 +87,7 @@ public class LobbyManager {
 	 * @param name the specified lobby's name.
 	 * @return true if yes; false if no.
 	 */
-	public boolean exists(String name) {
+	public boolean exists(Identifier name) {
 		return getLobby(name) != null;
 	}
 

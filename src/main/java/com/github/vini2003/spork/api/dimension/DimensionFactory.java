@@ -9,7 +9,7 @@ import net.minecraft.world.dimension.DimensionType;
  * This DimensionFactory is heavily based on
  * the Tesseract API by Vatuu Komalia, with
  * permission.
- *
+ * <p>
  * You can find Tesseract at: https://github.com/Vatuu/tesseract
  */
 public class DimensionFactory {

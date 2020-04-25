@@ -2,7 +2,6 @@ package com.github.vini2003.spork.api.event.type.player;
 
 import com.github.vini2003.spork.api.entity.Player;
 import com.github.vini2003.spork.api.event.EventResult;
-import net.minecraft.client.world.ClientWorld;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +27,7 @@ public class PlayerDisconnectEvent {
 	}
 
 	public static EventResult dispatch(Player player) {
-		if (player.getWorld() instanceof ClientWorld) return EventResult.CONTINUE;
+		if (player.getWorld().isClient()) return EventResult.CONTINUE;
 
 		AtomicReference<EventResult> result = new AtomicReference<>(EventResult.CONTINUE);
 

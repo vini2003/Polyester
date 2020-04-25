@@ -3,8 +3,6 @@ package com.github.vini2003.spork.api.preset;
 import com.github.vini2003.spork.api.lobby.Lobby;
 import net.minecraft.util.Identifier;
 
-import java.util.List;
-
 /**
  * A Preset is a set of actions
  * to be queued or performed

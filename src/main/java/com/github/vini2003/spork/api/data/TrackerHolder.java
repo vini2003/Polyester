@@ -1,6 +1,6 @@
 package com.github.vini2003.spork.api.data;
 
-import java.util.Collection;
+import java.util.Map;
 
 public interface TrackerHolder {
 	/**
@@ -8,5 +8,5 @@ public interface TrackerHolder {
 	 *
 	 * @return the requested trackers.
 	 */
-	Collection<Tracker<?>> getTrackers();
+	Map<Object, Tracker<?>> getTrackers();
 }

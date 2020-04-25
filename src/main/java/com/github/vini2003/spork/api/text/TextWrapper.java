@@ -69,7 +69,7 @@ public class TextWrapper {
 		 * @param serializable the specified value.
 		 */
 		public Builder with(Serializable serializable) {
-			with(serializable.toString());
+			with(new LiteralText(serializable.toString()));
 			return this;
 		}
 

@@ -1,12 +1,9 @@
 package com.github.vini2003.spork.mixin.event;
 
-import com.github.vini2003.spork.api.entity.Player;
-import com.github.vini2003.spork.api.event.type.player.PlayerDamageEvent;
 import com.github.vini2003.spork.api.event.type.stack.StackPickupEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

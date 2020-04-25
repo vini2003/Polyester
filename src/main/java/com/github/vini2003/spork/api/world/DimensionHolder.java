@@ -1,9 +1,6 @@
 package com.github.vini2003.spork.api.world;
 
-import com.github.vini2003.spork.api.entity.Player;
-import net.minecraft.world.dimension.Dimension;
-
-import java.util.Collection;
+import net.minecraft.world.dimension.DimensionType;
 
 public interface DimensionHolder {
 	/**
@@ -11,19 +8,17 @@ public interface DimensionHolder {
 	 *
 	 * @return the requested dimension.
 	 */
-	Dimension getDimension();
+	DimensionType getDimension();
 
 	/**
 	 * Binds a dimension to this holder.
 	 *
 	 * @param dimension the dimension to be bound.
 	 */
-	void bindDimension(Dimension dimension);
+	void bindDimension(DimensionType dimension);
 
 	/**
-	 * Unbinds a dimension from this holder.
-	 *
-	 * @param dimension the dimension to be unbound.
+	 * Unbinds the dimension of this holder.
 	 */
-	void unbindPlayer(Dimension dimension);
+	void unbindDimension();
 }

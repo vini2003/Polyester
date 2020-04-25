@@ -1,10 +1,8 @@
 package com.github.vini2003.spork.api.event.type.stack;
 
-import com.github.vini2003.spork.api.entity.Player;
 import com.github.vini2003.spork.api.event.EventResult;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 
 import java.util.HashSet;
 import java.util.Set;

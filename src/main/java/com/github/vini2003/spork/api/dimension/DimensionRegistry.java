@@ -1,8 +1,6 @@
 package com.github.vini2003.spork.api.dimension;
 
 import com.github.vini2003.spork.mixin.registry.SimpleRegistryMixin;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.source.BiomeAccessType;
@@ -14,7 +12,7 @@ import java.util.HashMap;
  * This DimensionRegistry is heavily based on
  * the Tesseract API by Vatuu Komalia, with
  * permission.
- *
+ * <p>
  * You can find Tesseract at: https://github.com/Vatuu/tesseract
  */
 public class DimensionRegistry {

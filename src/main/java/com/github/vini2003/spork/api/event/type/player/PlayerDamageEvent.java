@@ -2,8 +2,6 @@ package com.github.vini2003.spork.api.event.type.player;
 
 import com.github.vini2003.spork.api.entity.Player;
 import com.github.vini2003.spork.api.event.EventResult;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
 
 import java.util.HashSet;
@@ -30,7 +28,7 @@ public class PlayerDamageEvent {
 	}
 
 	public static EventResult dispatch(Player player, DamageSource source, float amount) {
-		if (player.getWorld() instanceof ClientWorld) return EventResult.CONTINUE;
+		if (player.getWorld().isClient()) return EventResult.CONTINUE;
 
 		AtomicReference<EventResult> result = new AtomicReference<>(EventResult.CONTINUE);
 

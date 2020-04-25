@@ -2,7 +2,6 @@ package com.github.vini2003.spork.api.event.type.block;
 
 import com.github.vini2003.spork.api.block.BlockData;
 import com.github.vini2003.spork.api.event.EventResult;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
@@ -30,7 +29,7 @@ public class BlockCollideEvent {
 	}
 
 	public static EventResult dispatch(World world, Entity entity, BlockData data) {
-		if (world instanceof ClientWorld) return EventResult.CONTINUE;
+		if (world.isClient()) return EventResult.CONTINUE;
 
 		AtomicReference<EventResult> result = new AtomicReference<>(EventResult.CONTINUE);
 

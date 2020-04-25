@@ -1,9 +1,10 @@
 package com.github.vini2003.spork.api.preset;
 
 import net.minecraft.util.Identifier;
-import net.minecraft.world.dimension.DimensionType;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PresetRegistry {

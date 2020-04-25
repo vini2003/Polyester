@@ -3,6 +3,7 @@ package com.github.vini2003.spork.mixin.world;
 import com.github.vini2003.spork.Spork;
 import com.github.vini2003.spork.api.dimension.DimensionState;
 import com.github.vini2003.spork.api.dimension.ImplementedDimension;
+import com.github.vini2003.spork.api.manager.LobbyManager;
 import com.github.vini2003.spork.api.server.MinecraftServerWrapper;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.WorldGenerationProgressListener;
@@ -17,7 +18,10 @@ import net.minecraft.world.level.LevelInfo;
 import net.minecraft.world.level.LevelProperties;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
-import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -27,14 +31,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.function.BooleanSupplier;
 
 @Mixin(MinecraftServer.class)
 public abstract class MinecraftServerMixin implements MinecraftServerWrapper {
-	@Shadow @Final private Map<DimensionType, ServerWorld> worlds;
+	@Shadow
+	@Final
+	private Map<DimensionType, ServerWorld> worlds;
 
-	@Shadow @Final private DisableableProfiler profiler;
+	@Shadow
+	@Final
+	private DisableableProfiler profiler;
 
-	@Shadow public abstract ServerWorld getWorld(DimensionType dimensionType);
+	@Shadow
+	public abstract ServerWorld getWorld(DimensionType dimensionType);
 
 	@Mutable
 	private WorldSaveHandler worldSaveHandler;
@@ -43,7 +53,7 @@ public abstract class MinecraftServerMixin implements MinecraftServerWrapper {
 	private WorldGenerationProgressListener worldGenerationProgressListener;
 
 	@Inject(at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/world/dimension/DimensionType;getAll()Ljava/lang/Iterable;"), method = "createWorlds", cancellable = true)
-	private void createWorld(WorldSaveHandler worldSaveHandler, LevelProperties properties, LevelInfo levelInfo, WorldGenerationProgressListener worldGenerationProgressListener, CallbackInfo callbackInformation){
+	private void createWorld(WorldSaveHandler worldSaveHandler, LevelProperties properties, LevelInfo levelInfo, WorldGenerationProgressListener worldGenerationProgressListener, CallbackInfo callbackInformation) {
 		this.worldSaveHandler = worldSaveHandler;
 		this.worldGenerationProgressListener = worldGenerationProgressListener;
 
@@ -106,5 +116,10 @@ public abstract class MinecraftServerMixin implements MinecraftServerWrapper {
 			Spork.LOGGER.log(Level.ERROR, "World reset failed for world " + serverWorld.toString() + " of dimension " + serverWorld.getDimension().getType().getRawId() + " / " + serverWorld.getDimension().getType().getSuffix());
 			exception.printStackTrace();
 		}
+	}
+
+	@Inject(at = @At("RETURN"), method = "tick")
+	protected void tick(BooleanSupplier shouldKeepTicking, CallbackInfo callbackInformation) {
+		LobbyManager.INSTANCE.tick();
 	}
 }

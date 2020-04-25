@@ -1,12 +1,16 @@
 package com.github.vini2003.spork.utility;
 
 import com.github.vini2003.spork.api.data.Position;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,10 +19,23 @@ public interface WorldUtilities {
 	World getWorld();
 
 	/**
+	 * Gets a world based on a dimension type.
+	 *
+	 * @return the requested world.
+	 */
+	static ServerWorld getWorld(DimensionType type) {
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+			return IntegratedWorldUtilities.getWorld(type);
+		} else {
+			return DedicatedWorldUtilities.getWorld(type);
+		}
+	}
+
+	/**
 	 * Instantiates a world utilities on a world.
 	 *
 	 * @param world the specified world.
-	 * @return      the requested world utilities.
+	 * @return the requested world utilities.
 	 */
 	static WorldUtilities of(World world) {
 		return (WorldUtilities) world;

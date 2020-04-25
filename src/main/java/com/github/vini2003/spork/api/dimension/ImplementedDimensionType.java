@@ -5,14 +5,13 @@ import net.minecraft.world.biome.source.BiomeAccessType;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
 
-import java.io.File;
 import java.util.function.BiFunction;
 
 /**
  * This ImplementedDimensionType is heavily based on
  * the Tesseract API by Vatuu Komalia, with
  * permission.
- *
+ * <p>
  * You can find Tesseract at: https://github.com/Vatuu/tesseract
  */
 public class ImplementedDimensionType extends DimensionType {

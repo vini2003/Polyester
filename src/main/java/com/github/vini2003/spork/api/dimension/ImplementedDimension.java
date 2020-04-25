@@ -6,7 +6,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.dimension.OverworldDimension;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
 
@@ -14,7 +13,7 @@ import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
  * This ImplementedDimension is heavily based on
  * the Tesseract API by Vatuu Komalia, with
  * permission.
- *
+ * <p>
  * You can find Tesseract at: https://github.com/Vatuu/tesseract
  */
 public class ImplementedDimension extends Dimension {

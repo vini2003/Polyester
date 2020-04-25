@@ -6,7 +6,7 @@ import java.util.Arrays;
  * This DimensionState is heavily based on
  * the Tesseract API by Vatuu Komalia, with
  * permission.
- *
+ * <p>
  * You can find Tesseract at: https://github.com/Vatuu/tesseract
  */
 public enum DimensionState {
@@ -26,15 +26,15 @@ public enum DimensionState {
 		this.unregister = unregister;
 	}
 
-	public boolean shouldUnload(){
+	public boolean shouldUnload() {
 		return unload;
 	}
 
-	public boolean shouldReset(){
+	public boolean shouldReset() {
 		return reset;
 	}
 
-	public boolean shouldUnregister(){
+	public boolean shouldUnregister() {
 		return unregister;
 	}
 

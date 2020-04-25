@@ -2,7 +2,6 @@ package com.github.vini2003.spork.api.event.type.item;
 
 import com.github.vini2003.spork.api.block.BlockData;
 import com.github.vini2003.spork.api.event.EventResult;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
@@ -32,7 +31,7 @@ public class ItemUseEvent {
 	}
 
 	public static EventResult dispatch(World world, PlayerEntity player, BlockData data, ItemStack stack, Hand hand) {
-		if (world instanceof ClientWorld) return EventResult.CONTINUE;
+		if (world.isClient()) return EventResult.CONTINUE;
 
 		AtomicReference<EventResult> result = new AtomicReference<>(EventResult.CONTINUE);
 

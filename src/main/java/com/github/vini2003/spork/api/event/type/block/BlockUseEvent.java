@@ -3,7 +3,6 @@ package com.github.vini2003.spork.api.event.type.block;
 import com.github.vini2003.spork.api.block.BlockData;
 import com.github.vini2003.spork.api.entity.Player;
 import com.github.vini2003.spork.api.event.EventResult;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
@@ -31,7 +30,7 @@ public class BlockUseEvent {
 	}
 
 	public static EventResult dispatch(World world, Player player, BlockData data, Hand hand) {
-		if (world instanceof ClientWorld) return EventResult.CONTINUE;
+		if (world.isClient()) return EventResult.CONTINUE;
 
 		AtomicReference<EventResult> result = new AtomicReference<>(EventResult.CONTINUE);
 

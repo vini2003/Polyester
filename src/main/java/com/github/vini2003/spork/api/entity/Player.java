@@ -12,6 +12,7 @@ import net.minecraft.network.MessageType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
@@ -215,6 +216,35 @@ public interface Player {
 	 */
 	default DimensionType getDimension() {
 		return target().dimension;
+	}
+
+	/**
+	 * Asserts whether this player is in a lobby.
+	 *
+	 * @return true if yes; false if no.
+	 */
+	default boolean hasLobby() {
+		return getLobby() != null;
+	}
+
+	/**
+	 * Asserts whether this player is in a lobby
+	 * and that lobby has a preset loaded.
+	 *
+	 * @return true if yes; false if no.
+	 */
+	default boolean hasPreset() {
+		return hasLobby() && getLobby().getPreset() != null;
+	}
+
+	/**
+	 * Retrieves the preset  identifier of the lobby
+	 * this player is in.
+	 *
+	 * @return the requested identifier.
+	 */
+	default Identifier getPresetIdentifier() {
+		return hasPreset() ? getLobby().getPreset().getIdentifier() : null;
 	}
 
 	/**

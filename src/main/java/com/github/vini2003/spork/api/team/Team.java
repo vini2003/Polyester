@@ -14,21 +14,18 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Tickable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable {
 	private static final Random RANDOM = new Random();
 
-	private final ArrayList<Player> players = new ArrayList<>();
+	private final List<Player> players = new ArrayList<>();
 
-	private final ArrayList<Tracker<?>> trackers = new ArrayList<>();
+	private final Map<Object, Tracker<?>> trackers = new HashMap<>();
 
-	private final HashMap<Predicate<Team>, Consumer<Team>> schedule = new HashMap<>();
+	private final Map<Predicate<Team>, Consumer<Team>> queue = new HashMap<>();
 
 	private final Details details;
 
@@ -103,7 +100,7 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 	 */
 
 	@Override
-	public ArrayList<Player> getPlayers() {
+	public Collection<Player> getPlayers() {
 		return players;
 	}
 
@@ -124,7 +121,7 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 	 */
 
 	@Override
-	public ArrayList<Tracker<?>> getTrackers() {
+	public Map<Object, Tracker<?>> getTrackers() {
 		return trackers;
 	}
 	/*
@@ -133,8 +130,8 @@ public class Team implements LobbyHolder, PlayerHolder, TrackerHolder, Tickable 
 
 	@Override
 	public void tick() {
-		trackers.forEach(Tracker::tick);
-		schedule.forEach((predicate, action) -> {
+		trackers.forEach((key, tracker) -> tracker.tick());
+		queue.forEach((predicate, action) -> {
 			if (predicate.test(this)) action.accept(this);
 		});
 	}

@@ -1,6 +1,7 @@
 package com.github.vini2003.spork;
 
 import com.github.vini2003.spork.registry.SporkCommands;
+import com.github.vini2003.spork.registry.SporkEvents;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,5 +13,6 @@ public class Spork implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		SporkCommands.initialize();
+		SporkEvents.initialize();
 	}
 }
