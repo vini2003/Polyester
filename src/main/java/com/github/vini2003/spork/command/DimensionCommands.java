@@ -75,8 +75,7 @@ public class DimensionCommands {
 
 		Player.of(context.getSource().getPlayer()).sendChatMessage(
 				TextWrapper.builder()
-						.with(TextWrapper.literal("§7§o>> " + context.getInput() + "§r\n"))
-						.with(TextWrapper.translatable("text.spork.dimension_teleport"))
+						.with(TextWrapper.literal("Teleported to dimension"))
 						.with(TextWrapper.literal(DimensionRegistry.INSTANCE.getByIdentifier(new Identifier(getString(context, "name"))).toString()))
 						.build(), MessageType.CHAT
 		);
@@ -97,8 +96,7 @@ public class DimensionCommands {
 
 		Player.of(context.getSource().getPlayer()).sendChatMessage(
 				TextWrapper.builder()
-						.with(TextWrapper.literal("§7§o>> " + context.getInput() + "§r\n"))
-						.with(TextWrapper.translatable("text.spork.dimension_create"))
+						.with(TextWrapper.literal("Teleported to dimension"))
 						.with(TextWrapper.literal(name.toString()))
 						.build(), MessageType.CHAT
 		);
@@ -129,8 +127,7 @@ public class DimensionCommands {
 
 		Player.of(context.getSource().getPlayer()).sendChatMessage(
 				TextWrapper.builder()
-						.with(TextWrapper.literal("§7§o>> " + context.getInput() + "§r\n"))
-						.with(TextWrapper.translatable("text.spork.dimension_destroy"))
+						.with(TextWrapper.literal("Destroyed dimension"))
 						.with(TextWrapper.literal(name.toString()))
 						.build(), MessageType.CHAT
 		);

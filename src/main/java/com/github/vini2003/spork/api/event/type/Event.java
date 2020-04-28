@@ -1,12 +1,11 @@
 package com.github.vini2003.spork.api.event.type;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public abstract class Event<T> {
-	private final Set<T> listeners = new HashSet<>();
+	private final List<T> listeners = new ArrayList<>();
 
-	public Set<T> getListeners() {
+	public Collection<T> getListeners() {
 		return listeners;
 	}
 

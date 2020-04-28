@@ -22,6 +22,9 @@ public class DimensionUtilities {
 	public static void teleport(PlayerEntity player, DimensionType type, BlockPos position) {
 		FabricDimensions.teleport(player, type, (entity, world, direction, pitch, yaw) -> new BlockPattern.TeleportTarget(new Vec3d(position).add(0.5d, 0d, 0.5d), Vec3d.ZERO, (int) yaw));
 		((ServerPlayerEntity) player).teleport(WorldUtilities.getWorld(type), position.getX(), position.getY(), position.getZ(), player.yaw, player.pitch);
+
+		((ServerPlayerEntity) player).closeContainer();
+		((ServerPlayerEntity) player).closeCurrentScreen();
 	}
 
 	public static Pair<Identifier, DimensionType> getSuperFlat() {

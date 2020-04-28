@@ -103,7 +103,7 @@ public class ExamplePreset extends Preset {
 
 	private static final LobbyUnbindPlayerEvent.Listener unbindPlayerListener = ((lobby, player) -> {
 		if (!player.getWorld().isClient()) {
-			if (lobby.getPreset().getIdentifier().equals(ExamplePreset.IDENTIFIER)) {
+			if (player.hasPreset() && lobby.getPreset().getIdentifier().equals(ExamplePreset.IDENTIFIER)) {
 				DimensionUtilities.teleport(player.target(), DimensionType.OVERWORLD, new BlockPos(0, 64, 0));
 			}
 		}
@@ -140,7 +140,7 @@ public class ExamplePreset extends Preset {
 				}
 				return EventResult.CANCEL;
 			}
-		} else if (player.getPresetIdentifier().equals(IDENTIFIER)) {
+		} else if (player.hasPreset() && player.getPresetIdentifier().equals(IDENTIFIER)) {
 			return EventResult.CANCEL;
 		}
 		return EventResult.CONTINUE;

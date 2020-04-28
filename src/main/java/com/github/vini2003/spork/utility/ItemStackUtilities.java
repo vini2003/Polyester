@@ -2,10 +2,12 @@ package com.github.vini2003.spork.utility;
 
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.text.Text;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Utilities for dealing
@@ -62,5 +64,25 @@ public class ItemStackUtilities {
 				++i;
 			}
 		}
+	}
+
+	public static ItemStack withLore(ItemStack stack, Collection<Text> texts) {
+		List<Text> entries = (List<Text>) texts;
+
+		ListTag loreListTag = new ListTag();
+
+		entries.forEach(text -> loreListTag.add(StringTag.of(Text.Serializer.toJson(text))));
+
+		CompoundTag displayTag = stack.getOrCreateTag().getCompound("display");
+
+		displayTag.put("Lore", loreListTag);
+
+		CompoundTag stackTag = stack.getOrCreateTag();
+
+		stackTag.put("display", displayTag);
+
+		stack.setTag(stackTag);
+
+		return stack;
 	}
 }

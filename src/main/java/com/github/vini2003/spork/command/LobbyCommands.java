@@ -66,7 +66,7 @@ public class LobbyCommands {
 
 		player.sendChatMessage(
 				TextWrapper.builder()
-						.with(TextWrapper.translatable("text.spork.lobby_join"))
+						.with(TextWrapper.literal("Joined lobby"))
 						.with(TextWrapper.literal(lobbyIdentifier.toString()))
 						.build(), MessageType.CHAT
 		);
@@ -88,7 +88,7 @@ public class LobbyCommands {
 		Player player = Player.of(context);
 		player.sendChatMessage(
 				TextWrapper.builder()
-						.with(TextWrapper.translatable("text.spork.lobby_leave"))
+						.with(TextWrapper.literal("Left lobby"))
 						.with(TextWrapper.literal(lobbyIdentifier.toString()))
 						.build(), MessageType.CHAT
 		);
@@ -107,7 +107,7 @@ public class LobbyCommands {
 		Player player = Player.of(context);
 		player.sendChatMessage(
 				TextWrapper.builder()
-						.with(TextWrapper.translatable("text.spork.lobby_create"))
+						.with(TextWrapper.literal("Created lobby"))
 						.with(TextWrapper.literal(lobbyIdentifier.toString()))
 						.build(), MessageType.CHAT
 		);
@@ -122,7 +122,7 @@ public class LobbyCommands {
 		Player player = Player.of(context);
 		player.sendChatMessage(
 				TextWrapper.builder()
-						.with(TextWrapper.translatable("text.spork.lobby_remove"))
+						.with(TextWrapper.literal("Deleted lobby"))
 						.with(TextWrapper.literal(lobbyIdentifier.toString()))
 						.build(), MessageType.CHAT
 		);
@@ -149,9 +149,9 @@ public class LobbyCommands {
 		Player player = Player.of(context);
 		player.sendChatMessage(
 				TextWrapper.builder()
-						.with(TextWrapper.translatable("text.spork.lobby_preset_set_one"))
+						.with(TextWrapper.literal("Set preset of lobby"))
 						.with(TextWrapper.literal(lobbyIdentifier.toString()))
-						.with(TextWrapper.translatable("text.spork.lobby_preset_set_two"))
+						.with(TextWrapper.literal("to"))
 						.with(TextWrapper.literal(presetIdentifier.toString()))
 						.build(), MessageType.CHAT
 		);
@@ -175,9 +175,9 @@ public class LobbyCommands {
 		Player player = Player.of(context);
 		player.sendChatMessage(
 				TextWrapper.builder()
-						.with(TextWrapper.translatable("text.spork.lobby_preset_begin_one"))
+						.with(TextWrapper.literal("Began lobby"))
 						.with(TextWrapper.literal(lobbyIdentifier.toString()))
-						.with(TextWrapper.translatable("text.spork.lobby_preset_begin_two"))
+						.with(TextWrapper.literal("with preset"))
 						.with(TextWrapper.literal(lobby.getPreset().getIdentifier().toString()))
 						.build(), MessageType.CHAT
 		);
@@ -201,9 +201,9 @@ public class LobbyCommands {
 		Player player = Player.of(context);
 		player.sendChatMessage(
 				TextWrapper.builder()
-						.with(TextWrapper.translatable("text.spork.lobby_preset_end_one"))
+						.with(TextWrapper.literal("Ended lobby"))
 						.with(TextWrapper.literal(lobbyIdentifier.toString()))
-						.with(TextWrapper.translatable("text.spork.lobby_preset_end_two"))
+						.with(TextWrapper.literal("with preset"))
 						.with(TextWrapper.literal(lobby.getPreset().getIdentifier().toString()))
 						.build(), MessageType.CHAT
 		);
@@ -227,9 +227,9 @@ public class LobbyCommands {
 		Player player = Player.of(context);
 		player.sendChatMessage(
 				TextWrapper.builder()
-						.with(TextWrapper.translatable("text.spork.lobby_preset_restart_one"))
+						.with(TextWrapper.literal("Restarted lobby"))
 						.with(TextWrapper.literal(lobbyIdentifier.toString()))
-						.with(TextWrapper.translatable("text.spork.lobby_preset_restart_two"))
+						.with(TextWrapper.literal("with preset"))
 						.with(TextWrapper.literal(lobby.getPreset().getIdentifier().toString()))
 						.build(), MessageType.CHAT
 		);
