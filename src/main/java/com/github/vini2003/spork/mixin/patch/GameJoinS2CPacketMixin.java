@@ -1,6 +1,6 @@
 package com.github.vini2003.spork.mixin.patch;
 
-import com.github.vini2003.spork.api.dimension.ImplementedDimensionType;
+import com.github.vini2003.spork.api.dimension.DimensionRegistry;
 import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
 import net.minecraft.util.PacketByteBuf;
 import net.minecraft.world.GameMode;
@@ -9,6 +9,9 @@ import net.minecraft.world.level.LevelGeneratorType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.io.IOException;
 
@@ -51,21 +54,10 @@ public abstract class GameJoinS2CPacketMixin {
 	 * @reason trick vanilla into thinking
 	 * our dimensions are the overworld.
 	 */
-	@Overwrite
-	public void write(PacketByteBuf buffer) throws IOException {
-		buffer.writeInt(this.playerEntityId);
-		int i = this.gameMode.getId();
-		if (this.hardcore) {
-			i |= 8;
+	@Inject(at = @At("HEAD"), method = "write(Lnet/minecraft/util/PacketByteBuf;)V")
+	public void write(PacketByteBuf buffer, CallbackInfo callbackInformation) throws IOException {
+		if (!DimensionRegistry.INSTANCE.shouldSynchronize(dimension)) {
+			dimension = DimensionType.OVERWORLD;
 		}
-
-		buffer.writeByte(i);
-		buffer.writeInt(this.dimension instanceof ImplementedDimensionType ? DimensionType.OVERWORLD.getRawId() : this.dimension.getRawId());
-		buffer.writeLong(this.seed);
-		buffer.writeByte(this.maxPlayers);
-		buffer.writeString(this.dimension instanceof ImplementedDimensionType ? LevelGeneratorType.DEFAULT.getName() : this.generatorType.getName());
-		buffer.writeVarInt(this.chunkLoadDistance);
-		buffer.writeBoolean(this.reducedDebugInfo);
-		buffer.writeBoolean(this.showsDeathScreen);
 	}
 }

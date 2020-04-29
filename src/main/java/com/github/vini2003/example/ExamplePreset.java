@@ -1,6 +1,7 @@
 package com.github.vini2003.example;
 
 import com.github.vini2003.spork.api.data.Tracker;
+import com.github.vini2003.spork.api.dimension.DimensionRegistry;
 import com.github.vini2003.spork.api.entity.Player;
 import com.github.vini2003.spork.api.event.EventResult;
 import com.github.vini2003.spork.api.event.type.block.BlockStepEvent;
@@ -10,7 +11,7 @@ import com.github.vini2003.spork.api.event.type.player.PlayerDamageEvent;
 import com.github.vini2003.spork.api.lobby.Lobby;
 import com.github.vini2003.spork.api.preset.Preset;
 import com.github.vini2003.spork.api.text.TextWrapper;
-import com.github.vini2003.spork.utility.DimensionUtilities;
+import com.github.vini2003.spork.api.dimension.DimensionUtilities;
 import com.github.vini2003.spork.utility.WorldUtilities;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.damage.DamageSource;
@@ -156,10 +157,10 @@ public class ExamplePreset extends Preset {
 		startTracker.setValue(0);
 
 		if (!lobby.hasDimension()) {
-			Pair<Identifier, DimensionType> superFlat = DimensionUtilities.getSuperFlat();
+			DimensionType superFlat = DimensionRegistry.INSTANCE.getByIdentifier(DimensionUtilities.getVoidDimension());
 
-			lobby.bindDimension(superFlat.getRight());
-			lobby.bindWorld(WorldUtilities.getWorld(superFlat.getRight()));
+			lobby.bindDimension(superFlat);
+			lobby.bindWorld(WorldUtilities.getWorld(superFlat));
 		}
 
 		lobby.getWorld().getStructureManager().getStructure(SMALL_TNT_RUN).place(lobby.getWorld(), new BlockPos(0, 0, 0), new StructurePlacementData());

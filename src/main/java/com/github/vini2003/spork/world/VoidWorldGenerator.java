@@ -18,8 +18,6 @@ import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
 
 public class VoidWorldGenerator extends ChunkGenerator<ChunkGeneratorConfig> {
-	private final Biome biome = Biomes.PLAINS;
-
 	public VoidWorldGenerator(IWorld world) {
 		super(world, new FixedBiomeSource(new FixedBiomeSourceConfig(null)), new ChunkGeneratorConfig());
 	}
@@ -36,7 +34,6 @@ public class VoidWorldGenerator extends ChunkGenerator<ChunkGeneratorConfig> {
 	}
 
 	public void populateNoise(IWorld world, Chunk chunk) {
-
 	}
 
 	public int getHeightOnGround(int x, int z, Heightmap.Type heightmapType) {

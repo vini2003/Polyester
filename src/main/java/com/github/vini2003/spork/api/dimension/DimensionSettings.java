@@ -1,11 +1,15 @@
 package com.github.vini2003.spork.api.dimension;
 
+import net.fabricmc.fabric.api.dimension.v1.EntityPlacer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.source.BiomeAccessType;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
+
+import java.util.function.Function;
 
 /**
  * These DimensionSettings are heavily based on
@@ -47,6 +51,10 @@ public class DimensionSettings {
 	SpawnChunkPositionFunction spawnChunkPositionFunction;
 	TopChunkPositionFunction topSpawnPositionFunction;
 	ChunkGeneratorFunction chunkGeneratorFunction;
+
+	BiomeAccessType biomeAccessType;
+
+	EntityPlacer entityPlacer;
 
 	BlockPos spawnPosition = new BlockPos(0, 64, 0);
 }

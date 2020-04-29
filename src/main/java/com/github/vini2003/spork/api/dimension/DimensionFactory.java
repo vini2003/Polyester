@@ -1,7 +1,9 @@
 package com.github.vini2003.spork.api.dimension;
 
 import com.github.vini2003.spork.api.data.Position;
+import net.fabricmc.fabric.api.dimension.v1.EntityPlacer;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.source.BiomeAccessType;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
 
@@ -65,6 +67,16 @@ public class DimensionFactory {
 
 	public DimensionFactory withChunkGeneratorFunction(DimensionSettings.ChunkGeneratorFunction function) {
 		settings.chunkGeneratorFunction = function;
+		return this;
+	}
+
+	public DimensionFactory withBiomeAccessType(BiomeAccessType biomeAccessType) {
+		settings.biomeAccessType = biomeAccessType;
+		return this;
+	}
+
+	public DimensionFactory withEntityPlacer(EntityPlacer entityPlacer) {
+		settings.entityPlacer = entityPlacer;
 		return this;
 	}
 

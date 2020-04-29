@@ -1,4 +1,4 @@
-package com.github.vini2003.spork.command;
+package com.github.vini2003.spork.api.dimension;
 
 import com.github.vini2003.spork.Spork;
 import com.github.vini2003.spork.api.dimension.DimensionFactory;
@@ -8,6 +8,7 @@ import com.github.vini2003.spork.api.dimension.ImplementedDimension;
 import com.github.vini2003.spork.api.entity.Player;
 import com.github.vini2003.spork.api.server.MinecraftServerWrapper;
 import com.github.vini2003.spork.api.text.TextWrapper;
+import com.github.vini2003.spork.world.VoidWorldGenerator;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
@@ -16,6 +17,8 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
 import net.fabricmc.fabric.api.registry.CommandRegistry;
+import net.fabricmc.fabric.impl.dimension.FabricDimensionInternals;
+import net.fabricmc.fabric.impl.registry.sync.FabricRegistryClientInit;
 import net.minecraft.block.pattern.BlockPattern;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.MessageType;
@@ -49,7 +52,7 @@ import static net.minecraft.server.command.CommandManager.literal;
 
 public class DimensionCommands {
 	public static SuggestionProvider<ServerCommandSource> suggestDimensions() {
-		return (context, builder) -> getSuggestionsBuilder(builder, (List<String>) DimensionRegistry.INSTANCE.getNames().values().stream().map(Identifier::toString).collect(Collectors.toList()));
+		return (context, builder) -> getSuggestionsBuilder(builder, (List<String>) DimensionRegistry.INSTANCE.getNames().stream().map(Identifier::toString).collect(Collectors.toList()));
 	}
 
 	private static CompletableFuture<Suggestions> getSuggestionsBuilder(SuggestionsBuilder builder, List<String> list) {
@@ -92,9 +95,11 @@ public class DimensionCommands {
 				.enableSky()
 				.withChunkGeneratorFunction((world) -> new FlatChunkGenerator(world, new FixedBiomeSource(new FixedBiomeSourceConfig(null)), FlatChunkGeneratorConfig.getDefaultConfig()))
 				.withSpawnChunkPositionFunction((chunkPosition, canMobSpawn) -> new BlockPos(0, 4, 0))
-				.withTopChunkPositionFunction(((x, z, canMobSpawn) -> new BlockPos(0, 4, 0)));
+				.withTopChunkPositionFunction(((x, z, canMobSpawn) -> new BlockPos(0, 4, 0)))
+				.withEntityPlacer(DimensionUtilities.PLACER.apply(new BlockPos(0, 64, 0)))
+				.withBiomeAccessType(VoronoiBiomeAccessType.INSTANCE);
 
-		DimensionRegistry.INSTANCE.register(name, factory, VoronoiBiomeAccessType.INSTANCE);
+		DimensionRegistry.INSTANCE.register(name, factory);
 
 		Player.of(context.getSource().getPlayer()).sendChatMessage(
 				TextWrapper.builder()

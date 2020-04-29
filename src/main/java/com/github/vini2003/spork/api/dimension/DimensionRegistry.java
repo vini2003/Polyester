@@ -1,16 +1,14 @@
 package com.github.vini2003.spork.api.dimension;
 
+import com.github.vini2003.spork.api.data.Position;
 import com.github.vini2003.spork.mixin.registry.SimpleRegistryMixin;
 import net.fabricmc.fabric.api.dimension.v1.FabricDimensionType;
-import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
-import net.fabricmc.fabric.impl.dimension.FabricDimensionClientInit;
-import net.fabricmc.fabric.impl.dimension.FabricDimensionInternals;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.source.BiomeAccessType;
 import net.minecraft.world.dimension.DimensionType;
 
-import java.util.HashMap;
+import java.util.*;
+import java.util.function.Supplier;
 
 /**
  * This DimensionRegistry is heavily based on
@@ -20,63 +18,47 @@ import java.util.HashMap;
  * You can find Tesseract at: https://github.com/Vatuu/tesseract
  */
 public class DimensionRegistry {
+	private static final Supplier<RuntimeException> DIMENSION_NOT_FOUND = () -> new RuntimeException("Dimension not found in registry!");
+
 	public static final DimensionRegistry INSTANCE = new DimensionRegistry();
 
-	private final HashMap<Integer, DimensionType> ENTRIES = new HashMap<>();
-	private final HashMap<DimensionType, Identifier> DIMENSION_TO_NAME = new HashMap<>();
-	private final HashMap<Identifier, DimensionType> NAME_TO_DIMENSION = new HashMap<>();
+	private final Set<Identifier> sporkDimensions = new HashSet<>();
 
 	private DimensionRegistry() {
-		ENTRIES.put(DimensionType.OVERWORLD.getRawId(), DimensionType.OVERWORLD);
-		ENTRIES.put(DimensionType.THE_NETHER.getRawId(), DimensionType.THE_NETHER);
-		ENTRIES.put(DimensionType.THE_END.getRawId(), DimensionType.THE_END);
-
-		NAME_TO_DIMENSION.put(new Identifier("overworld"), DimensionType.OVERWORLD);
-		NAME_TO_DIMENSION.put(new Identifier("the_nether"), DimensionType.THE_NETHER);
-		NAME_TO_DIMENSION.put(new Identifier("the_end"), DimensionType.THE_END);
-
-		DIMENSION_TO_NAME.put(DimensionType.OVERWORLD, new Identifier("overworld"));
-		DIMENSION_TO_NAME.put(DimensionType.THE_NETHER, new Identifier("the_nether"));
-		DIMENSION_TO_NAME.put(DimensionType.THE_END, new Identifier("the_end"));
 	}
 
-	public HashMap<Integer, DimensionType> getEntries() {
-		return ENTRIES;
+	public boolean shouldSynchronize(DimensionType type) {
+		return !sporkDimensions.contains(getByType(type));
 	}
 
-	public HashMap<DimensionType, Identifier> getNames() {
-		return DIMENSION_TO_NAME;
+	public Collection<Identifier> getNames() {
+		return new ArrayList<>(((SimpleRegistryMixin<DimensionType>) Registry.DIMENSION_TYPE).getEntries().keySet());
 	}
 
 	public DimensionType getByIdentifier(Identifier identifier) {
-		return NAME_TO_DIMENSION.get(identifier);
+		return ((SimpleRegistryMixin<DimensionType>) Registry.DIMENSION_TYPE).getEntries().entrySet().stream().filter((entry -> entry.getKey().equals(identifier))).findFirst().orElseThrow(DIMENSION_NOT_FOUND).getValue();
 	}
 
 	public Identifier getByType(DimensionType type) {
-		return DIMENSION_TO_NAME.get(type);
+		return ((SimpleRegistryMixin<DimensionType>) Registry.DIMENSION_TYPE).getEntries().entrySet().stream().filter((entry -> entry.getValue() == type)).findFirst().orElseThrow(DIMENSION_NOT_FOUND).getKey();
 	}
 
-	public DimensionType register(Identifier name, DimensionFactory factory, BiomeAccessType biomeAccessType) {
-		int identifier = ENTRIES.size() + 5;
-		ImplementedDimensionType type = new ImplementedDimensionType(identifier, name.getPath(), name.getPath(), (factory::build), true, biomeAccessType);
-		ENTRIES.put(identifier, type);
-		DIMENSION_TO_NAME.put(type, name);
-		NAME_TO_DIMENSION.put(name, type);
-		return Registry.register(Registry.DIMENSION_TYPE, identifier, name.toString(), type);
+	public void register(Identifier name, DimensionFactory factory) {
+		sporkDimensions.add(name);
+		FabricDimensionType.builder()
+				.biomeAccessStrategy(factory.settings.biomeAccessType)
+				.defaultPlacer(DimensionUtilities.PLACER.apply(Position.of(0, 64, 0).asBlockPosition()))
+				.factory(factory::build)
+				.buildAndRegister(name);
 	}
 
 	public boolean unregister(Identifier name) {
-		return unregister(NAME_TO_DIMENSION.get(name));
+		sporkDimensions.remove(name);
+		return ((SimpleRegistryMixin<DimensionType>) Registry.DIMENSION_TYPE).getEntries().values().remove(getByIdentifier(name));
 	}
 
 	public boolean unregister(DimensionType type) {
-		for (DimensionType entryType : ENTRIES.values()) {
-			if (entryType.getRawId() == type.getRawId()) {
-				ENTRIES.remove(type.getRawId() + 1);
-				NAME_TO_DIMENSION.remove(DIMENSION_TO_NAME.get(type));
-				DIMENSION_TO_NAME.remove(type);
-			}
-		}
+		sporkDimensions.remove(getByType(type));
 		return ((SimpleRegistryMixin<DimensionType>) Registry.DIMENSION_TYPE).getEntries().values().remove(type);
 	}
 }
