@@ -68,7 +68,9 @@ public class DimensionCommands {
 		return builder.buildFuture();
 	}
 
-	private static int teleport(CommandContext<ServerCommandSource> context, DimensionType type, BlockPos position) throws CommandSyntaxException {
+	private static int teleport(CommandContext<ServerCommandSource> context, Identifier identifier, BlockPos position) throws CommandSyntaxException {
+		DimensionType type = DimensionRegistry.INSTANCE.getByIdentifier(identifier);
+
 		PlayerEntity player = context.getSource().getPlayer();
 		FabricDimensions.teleport(player, type, (entity, world, direction, pitch, yaw) -> new BlockPattern.TeleportTarget(new Vec3d(position).add(0.5d, 0d, 0.5d), Vec3d.ZERO, (int) yaw));
 		player.teleport(position.getX(), position.getY(), position.getZ());
@@ -76,7 +78,7 @@ public class DimensionCommands {
 		Player.of(context.getSource().getPlayer()).sendChatMessage(
 				TextWrapper.builder()
 						.with(TextWrapper.literal("Teleported to dimension"))
-						.with(TextWrapper.literal(DimensionRegistry.INSTANCE.getByIdentifier(new Identifier(getString(context, "name"))).toString()))
+						.with(TextWrapper.literal(DimensionRegistry.INSTANCE.getByIdentifier(getIdentifier(context, "name")).toString()))
 						.build(), MessageType.CHAT
 		);
 
@@ -96,7 +98,7 @@ public class DimensionCommands {
 
 		Player.of(context.getSource().getPlayer()).sendChatMessage(
 				TextWrapper.builder()
-						.with(TextWrapper.literal("Teleported to dimension"))
+						.with(TextWrapper.literal("Created dimension"))
 						.with(TextWrapper.literal(name.toString()))
 						.build(), MessageType.CHAT
 		);
@@ -112,7 +114,7 @@ public class DimensionCommands {
 				((ImplementedDimension) player.world.dimension).setState(DimensionState.RESET_UNREGISTER);
 				worldsToUnload.add(player.world);
 				try {
-					teleport(context, DimensionType.OVERWORLD, new BlockPos(0, 64, 0));
+					teleport(context, DimensionRegistry.INSTANCE.getByType(DimensionType.OVERWORLD), new BlockPos(0, 64, 0));
 				} catch (CommandSyntaxException exception) {
 					Spork.LOGGER.log(Level.ERROR, "Failed to move player after dimension " + name.toString() + " was destroyed!");
 				}
@@ -144,9 +146,9 @@ public class DimensionCommands {
 					literal("teleport")
 							.then(argument("name", identifier())
 									.suggests(suggestDimensions())
-									.executes(context -> teleport(context, DimensionRegistry.INSTANCE.getByIdentifier(getIdentifier(context, "name")), new BlockPos(0, 64, 0)))
+									.executes(context -> teleport(context, getIdentifier(context, "name"), new BlockPos(0, 64, 0)))
 									.then(argument("position", blockPos())
-											.executes(context -> teleport(context, DimensionRegistry.INSTANCE.getByIdentifier(getIdentifier(context, "name")), getBlockPos(context, "position")))))
+											.executes(context -> teleport(context, getIdentifier(context, "name"), getBlockPos(context, "position")))))
 							.build();
 
 			LiteralCommandNode<ServerCommandSource> createNode =
@@ -163,6 +165,7 @@ public class DimensionCommands {
 							.build();
 
 			dispatcher.getRoot().addChild(baseNode);
+
 			baseNode.addChild(teleportNode);
 			baseNode.addChild(createNode);
 			baseNode.addChild(destroyNode);

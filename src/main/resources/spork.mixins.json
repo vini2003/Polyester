@@ -18,6 +18,7 @@
     "patch.FormattingMixin",
     "patch.GameJoinS2CPacketMixin",
     "patch.ItemStackMixin",
+    "patch.PlayerRespawnS2CPacketMixin",
     "registry.SimpleRegistryMixin",
     "world.MinecraftServerMixin",
     "world.PlayerManagerMixin"

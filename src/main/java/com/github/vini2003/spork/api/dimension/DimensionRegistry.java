@@ -1,6 +1,10 @@
 package com.github.vini2003.spork.api.dimension;
 
 import com.github.vini2003.spork.mixin.registry.SimpleRegistryMixin;
+import net.fabricmc.fabric.api.dimension.v1.FabricDimensionType;
+import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
+import net.fabricmc.fabric.impl.dimension.FabricDimensionClientInit;
+import net.fabricmc.fabric.impl.dimension.FabricDimensionInternals;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.source.BiomeAccessType;

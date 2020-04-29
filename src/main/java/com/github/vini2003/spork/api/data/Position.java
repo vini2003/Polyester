@@ -60,14 +60,4 @@ public class Position extends Vec3d {
 	public Vector3f asFloatVector() {
 		return new Vector3f((float) this.x, (float) this.y, (float) this.z);
 	}
-
-//	public Position translate(float x, float y, float z) {
-//
-//	}
-//
-//	public Position translate(float x) {
-//		Matrix3f matrixX = new Matrix3f();
-//		Matrix3f matrixX = new Matrix3f((float) this.x, 0f, 0f);
-//		Matrix3f matrixX = new Matrix3f((float) this.x, 0f, 0f);
-//	}
 }

@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import java.io.IOException;
 
 @Mixin(GameJoinS2CPacket.class)
-public class GameJoinS2CPacketMixin {
+public abstract class GameJoinS2CPacketMixin {
 	@Shadow
 	private int playerEntityId;
 
@@ -44,6 +44,8 @@ public class GameJoinS2CPacketMixin {
 	@Shadow
 	private boolean showsDeathScreen;
 
+	@Shadow public abstract boolean isHardcore();
+
 	/**
 	 * @author vini2003
 	 * @reason trick vanilla into thinking
@@ -61,7 +63,7 @@ public class GameJoinS2CPacketMixin {
 		buffer.writeInt(this.dimension instanceof ImplementedDimensionType ? DimensionType.OVERWORLD.getRawId() : this.dimension.getRawId());
 		buffer.writeLong(this.seed);
 		buffer.writeByte(this.maxPlayers);
-		buffer.writeString(this.generatorType.getName());
+		buffer.writeString(this.dimension instanceof ImplementedDimensionType ? LevelGeneratorType.DEFAULT.getName() : this.generatorType.getName());
 		buffer.writeVarInt(this.chunkLoadDistance);
 		buffer.writeBoolean(this.reducedDebugInfo);
 		buffer.writeBoolean(this.showsDeathScreen);
