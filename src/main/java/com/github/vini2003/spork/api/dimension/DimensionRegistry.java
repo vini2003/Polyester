@@ -31,6 +31,10 @@ public class DimensionRegistry {
 		return !sporkDimensions.contains(getByType(type));
 	}
 
+	public boolean shouldSynchronize(Identifier name) {
+		return !sporkDimensions.contains(name);
+	}
+
 	public Collection<Identifier> getNames() {
 		return new ArrayList<>(((SimpleRegistryMixin<DimensionType>) Registry.DIMENSION_TYPE).getEntries().keySet());
 	}

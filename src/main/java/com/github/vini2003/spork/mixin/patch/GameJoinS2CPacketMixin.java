@@ -18,36 +18,7 @@ import java.io.IOException;
 @Mixin(GameJoinS2CPacket.class)
 public abstract class GameJoinS2CPacketMixin {
 	@Shadow
-	private int playerEntityId;
-
-	@Shadow
-	private GameMode gameMode;
-
-	@Shadow
-	private boolean hardcore;
-
-	@Shadow
 	private DimensionType dimension;
-
-	@Shadow
-	private long seed;
-
-	@Shadow
-	private int maxPlayers;
-
-	@Shadow
-	private LevelGeneratorType generatorType;
-
-	@Shadow
-	private int chunkLoadDistance;
-
-	@Shadow
-	private boolean reducedDebugInfo;
-
-	@Shadow
-	private boolean showsDeathScreen;
-
-	@Shadow public abstract boolean isHardcore();
 
 	/**
 	 * @author vini2003
