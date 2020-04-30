@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
-  "id": "spork",
+  "id": "polyester",
   "version": "${version}",
-  "name": "Spork",
+  "name": "Polyester",
   "description": "A lightweight server-side modding API for Fabric.",
   "authors": [
     "vini2003"
   ],
   "contact": {
     "homepage": "https://github.com/vini2003/",
-    "sources": "https://github.com/vini2003/Spork/"
+    "sources": "https://github.com/vini2003/Polyester/"
   },
   "license": "LGPLv3",
-  "icon": "assets/spork/icon.png",
+  "icon": "assets/polyester/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.vini2003.spork.Spork",
+      "com.github.vini2003.polyester.Polyester",
       "com.github.vini2003.example.Example"
     ]
   },
   "mixins": [
-    "spork.mixins.json"
+    "polyester.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.7.4",

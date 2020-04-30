@@ -1,4 +1,4 @@
-# Spork
+# Polyester
 
 A lightweight server-side modding API for Fabric.
 

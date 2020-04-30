@@ -1,22 +1,12 @@
 package com.github.vini2003.example;
 
-import com.github.vini2003.spork.api.display.Display;
-import com.github.vini2003.spork.api.event.EventResult;
-import com.github.vini2003.spork.api.event.type.item.ItemUseEvent;
-import com.github.vini2003.spork.api.event.type.player.PlayerConnectEvent;
-import com.github.vini2003.spork.api.lobby.Lobby;
-import com.github.vini2003.spork.api.manager.LobbyManager;
-import com.github.vini2003.spork.api.preset.PresetRegistry;
+import com.github.vini2003.polyester.Polyester;
+import com.github.vini2003.polyester.api.event.EventResult;
+import com.github.vini2003.polyester.api.event.type.player.PlayerConnectEvent;
+import com.github.vini2003.polyester.api.lobby.Lobby;
+import com.github.vini2003.polyester.api.manager.LobbyManager;
+import com.github.vini2003.polyester.api.preset.registry.PresetRegistry;
 import net.fabricmc.api.ModInitializer;
-import net.minecraft.container.Container;
-import net.minecraft.container.ContainerType;
-import net.minecraft.container.NameableContainerFactory;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.BasicInventory;
-import net.minecraft.item.Items;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.GameMode;
 
@@ -26,8 +16,8 @@ import java.util.function.Predicate;
 public class Example implements ModInitializer {
 	@Override
 	public void onInitialize() {
-		PresetRegistry.INSTANCE.register(new Identifier("spork", "preset"), new ExamplePreset());
-		Lobby mainLobby = new Lobby(new Identifier("spork", "lobby"));
+		PresetRegistry.INSTANCE.register(new Identifier(Polyester.IDENTIFIER, "preset"), new ExamplePreset());
+		Lobby mainLobby = new Lobby(new Identifier(Polyester.IDENTIFIER, "lobby"));
 
 		Predicate<Lobby> bootPredicate = (lobby -> true);
 		Consumer<Lobby> bootAction = (lobby -> {

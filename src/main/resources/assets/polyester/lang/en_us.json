@@ -1,0 +1,17 @@
+{
+  "text.polyester.lobby_join": "Joined lobby",
+  "text.polyester.lobby_leave": "Left lobby",
+  "text.polyester.lobby_create": "Created lobby",
+  "text.polyester.lobby_remove": "Removed lobby",
+  "text.polyester.dimension_create": "Created dimension",
+  "text.polyester.dimension_destroy": "Destroyed dimension",
+  "text.polyester.dimension_teleport": "Teleported to dimension",
+  "text.polyester.lobby_preset_set_one": "Changed preset of lobby",
+  "text.polyester.lobby_preset_set_two": "to",
+  "text.polyester.lobby_preset_begin_one": "Began running lobby",
+  "text.polyester.lobby_preset_begin_two": "with preset",
+  "text.polyester.lobby_preset_end_one": "Ended running lobby",
+  "text.polyester.lobby_preset_end_two": "with preset",
+  "text.polyester.lobby_preset_restart_one": "Restarted running lobby",
+  "text.polyester.lobby_preset_restart_two": "with preset"
+}

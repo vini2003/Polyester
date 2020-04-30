@@ -1,0 +1,34 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.github.vini2003.polyester.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "chunk.ServerChunkManagerMixin",
+    "event.BlockItemMixin",
+    "event.EntityMixin",
+    "event.LivingEntityMixin",
+    "event.MinecraftServerMixin",
+    "event.PlayerEntityMixin",
+    "event.PlayerManagerMixin",
+    "event.ServerPlayerEntityMixin",
+    "event.ServerPlayerInteractionManagerMixin",
+    "event.WorldChunkMixin",
+    "event.WorldMixin",
+    "patch.FormattingMixin",
+    "patch.GameJoinS2CPacketMixin",
+    "patch.ItemStackMixin",
+    "patch.PlayerRespawnS2CPacketMixin",
+    "registry.RegistrySyncManagerMixin",
+    "registry.SimpleRegistryMixin",
+    "world.MinecraftServerMixin",
+    "world.PlayerManagerMixin"
+  ],
+  "client": [
+  ],
+  "server": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

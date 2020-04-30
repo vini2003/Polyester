@@ -1,11 +1,12 @@
 package com.github.vini2003.example;
 
-import com.github.vini2003.spork.api.display.DisplayBuilder;
-import com.github.vini2003.spork.api.display.DisplayBuilderFactory;
-import com.github.vini2003.spork.api.event.EventResult;
-import com.github.vini2003.spork.api.event.type.item.ItemUseEvent;
-import com.github.vini2003.spork.api.manager.LobbyManager;
-import com.github.vini2003.spork.utility.ItemStackUtilities;
+import com.github.vini2003.polyester.Polyester;
+import com.github.vini2003.polyester.api.display.DisplayBuilder;
+import com.github.vini2003.polyester.api.display.DisplayBuilderFactory;
+import com.github.vini2003.polyester.api.event.EventResult;
+import com.github.vini2003.polyester.api.event.type.item.ItemUseEvent;
+import com.github.vini2003.polyester.api.manager.LobbyManager;
+import com.github.vini2003.polyester.utility.ItemStackUtilities;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.text.LiteralText;
@@ -15,7 +16,7 @@ import java.util.Collections;
 
 public class ExampleDisplay {
 	private static final DisplayBuilder displayBuilder =
-			DisplayBuilderFactory.builder()
+			DisplayBuilderFactory.factory()
 					.bindTitle(new LiteralText("Lobbies"))
 					.bindStack(10, () -> {
 						ItemStack tntRunStack = ItemStackUtilities.withLore(new ItemStack(Items.TNT), Collections.singletonList(new LiteralText("§7§oJoin a TNT Run lobby!")));
@@ -23,7 +24,7 @@ public class ExampleDisplay {
 						return tntRunStack;
 					})
 					.bindAction(10, (player) -> {
-						LobbyManager.INSTANCE.getLobby(new Identifier("spork", "lobby")).bindPlayer(player);
+						LobbyManager.INSTANCE.getLobby(new Identifier(Polyester.IDENTIFIER, "lobby")).bindPlayer(player);
 					})
 					.bindHeight(6)
 					.build();
