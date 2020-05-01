@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class RegistrySyncManagerMixin {
 	@Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/util/registry/MutableRegistry;getId(Ljava/lang/Object;)Lnet/minecraft/util/Identifier;"), method = "toTag(Z)Lnet/minecraft/nbt/CompoundTag;")
 	private static <T> Identifier onSynchronize(MutableRegistry registry, T entry) {
-		if (registry == Registry.DIMENSION_TYPE && !DimensionRegistry.INSTANCE.shouldSynchronize((DimensionType) entry)) {
+		if (registry == Registry.DIMENSION_TYPE && DimensionRegistry.INSTANCE.isTracked((DimensionType) entry)) {
 			return null;
 		} else {
 			return registry.getId(entry);

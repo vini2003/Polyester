@@ -24,7 +24,7 @@ public abstract class GameJoinS2CPacketMixin {
 	 */
 	@Inject(at = @At("HEAD"), method = "write(Lnet/minecraft/util/PacketByteBuf;)V")
 	public void write(PacketByteBuf buffer, CallbackInfo callbackInformation) throws IOException {
-		if (!DimensionRegistry.INSTANCE.shouldSynchronize(dimension)) {
+		if (DimensionRegistry.INSTANCE.isTracked(dimension)) {
 			dimension = DimensionType.OVERWORLD;
 		}
 	}

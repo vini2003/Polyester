@@ -132,7 +132,6 @@ public class ExamplePreset extends Preset {
 					}
 				});
 
-
 				if (players.size() > 1) {
 					player.target().setCameraEntity(players.get(player.getWorld().random.nextInt(players.size())).target());
 				}
@@ -172,7 +171,7 @@ public class ExamplePreset extends Preset {
 		startTracker.setValue(0);
 
 		if (!lobby.hasDimension()) {
-			DimensionType superFlat = DimensionRegistry.INSTANCE.getByIdentifier(DimensionUtilities.getVoidDimension());
+			DimensionType superFlat = DimensionRegistry.INSTANCE.getByKey(DimensionUtilities.getVoidDimension());
 
 			lobby.bindDimension(superFlat);
 			lobby.bindWorld(WorldUtilities.getWorld(superFlat));

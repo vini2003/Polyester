@@ -21,7 +21,7 @@ public class ServerPlayerEntityMixin {
 		}
 	}
 
-	@Inject(at = @At("HEAD"), method = "Lnet/minecraft/server/network/ServerPlayerEntity;onDeath(Lnet/minecraft/entity/damage/DamageSource;)V", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "onDeath(Lnet/minecraft/entity/damage/DamageSource;)V", cancellable = true)
 	void onDeath(DamageSource source, CallbackInfo callbackInformation) {
 		if (PlayerDeathEvent.dispatch(Player.of((ServerPlayerEntity) (Object) this), source).isCancelled()) {
 			callbackInformation.cancel();

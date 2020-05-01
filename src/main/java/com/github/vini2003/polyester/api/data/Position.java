@@ -1,7 +1,11 @@
 package com.github.vini2003.polyester.api.data;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.client.util.math.Vector3f;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
@@ -59,5 +63,19 @@ public class Position extends Vec3d {
 
 	public Vector3f asFloatVector() {
 		return new Vector3f((float) this.x, (float) this.y, (float) this.z);
+	}
+
+	public CompoundTag serialize() {
+		CompoundTag tag = new CompoundTag();
+
+		tag.putDouble("x", x);
+		tag.putDouble("y", y);
+		tag.putDouble("z", z);
+
+		return tag;
+	}
+
+	public static Position deserialize(CompoundTag tag) {
+		return new Position(tag.getDouble("x"), tag.getDouble("y"), tag.getDouble("z"));
 	}
 }

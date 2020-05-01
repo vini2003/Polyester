@@ -48,7 +48,7 @@ import static net.minecraft.server.command.CommandManager.literal;
 
 public class DimensionCommands {
 	public static SuggestionProvider<ServerCommandSource> suggestDimensions() {
-		return (context, builder) -> getSuggestionsBuilder(builder, (List<String>) DimensionRegistry.INSTANCE.getNames().stream().map(Identifier::toString).collect(Collectors.toList()));
+		return (context, builder) -> getSuggestionsBuilder(builder, (List<String>) DimensionRegistry.INSTANCE.getKeys().stream().map(Identifier::toString).collect(Collectors.toList()));
 	}
 
 	private static CompletableFuture<Suggestions> getSuggestionsBuilder(SuggestionsBuilder builder, List<String> list) {
@@ -68,7 +68,7 @@ public class DimensionCommands {
 	}
 
 	private static int teleport(CommandContext<ServerCommandSource> context, Identifier identifier, BlockPos position) throws CommandSyntaxException {
-		DimensionType type = DimensionRegistry.INSTANCE.getByIdentifier(identifier);
+		DimensionType type = DimensionRegistry.INSTANCE.getByKey(identifier);
 
 		PlayerEntity player = context.getSource().getPlayer();
 		FabricDimensions.teleport(player, type, (entity, world, direction, pitch, yaw) -> new BlockPattern.TeleportTarget(new Vec3d(position).add(0.5d, 0d, 0.5d), Vec3d.ZERO, (int) yaw));
@@ -77,7 +77,7 @@ public class DimensionCommands {
 		Player.of(context.getSource().getPlayer()).sendChatMessage(
 				TextBuilder.builder()
 						.with(TextBuilder.literal("Teleported to dimension"))
-						.with(TextBuilder.literal(DimensionRegistry.INSTANCE.getByIdentifier(getIdentifier(context, "name")).toString()))
+						.with(TextBuilder.literal(DimensionRegistry.INSTANCE.getByKey(getIdentifier(context, "name")).toString()))
 						.build(), MessageType.CHAT
 		);
 
@@ -111,11 +111,11 @@ public class DimensionCommands {
 		ArrayList<World> worldsToUnload = new ArrayList<>();
 
 		context.getSource().getMinecraftServer().getPlayerManager().getPlayerList().forEach(player -> {
-			if (DimensionRegistry.INSTANCE.getByType(player.dimension).equals(name)) {
+			if (DimensionRegistry.INSTANCE.getByValue(player.dimension).equals(name)) {
 				((DimensionImplementation) player.world.dimension).setState(DimensionState.RESET_UNREGISTER);
 				worldsToUnload.add(player.world);
 				try {
-					teleport(context, DimensionRegistry.INSTANCE.getByType(DimensionType.OVERWORLD), new BlockPos(0, 64, 0));
+					teleport(context, DimensionRegistry.INSTANCE.getByValue(DimensionType.OVERWORLD), new BlockPos(0, 64, 0));
 				} catch (CommandSyntaxException exception) {
 					Polyester.LOGGER.log(Level.ERROR, "Failed to move player after dimension " + name.toString() + " was destroyed!");
 				}
