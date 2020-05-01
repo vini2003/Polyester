@@ -78,4 +78,8 @@ public class Position extends Vec3d {
 	public static Position deserialize(CompoundTag tag) {
 		return new Position(tag.getDouble("x"), tag.getDouble("y"), tag.getDouble("z"));
 	}
+
+	public String toCoordinates() {
+		return (int) x + ", " + (int) y + ", " + (int) z;
+	}
 }

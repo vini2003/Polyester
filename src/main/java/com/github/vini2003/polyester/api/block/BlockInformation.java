@@ -187,9 +187,15 @@ public class BlockInformation {
 	public CompoundTag serialize() {
 		CompoundTag tag = new CompoundTag();
 
-		tag.put("position", position.serialize());
-		tag.put("block_state", BlockState.serialize(NbtOps.INSTANCE, state).getValue());
-		tag.put("block_entity", entity.toTag(new CompoundTag()));
+		if (hasPosition()) {
+			tag.put("position", position.serialize());
+		}
+		if (hasState()) {
+			tag.put("block_state", BlockState.serialize(NbtOps.INSTANCE, state).getValue());
+		}
+		if (hasEntity()) {
+			tag.put("block_entity", entity.toTag(new CompoundTag()));
+		}
 
 		return tag;
 	}

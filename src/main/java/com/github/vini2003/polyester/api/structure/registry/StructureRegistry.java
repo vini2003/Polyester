@@ -83,7 +83,7 @@ public class StructureRegistry {
 		for (Map.Entry<Identifier, Structure> entry : entries.entrySet()) {
 			File file = new File(path.toString() + "/" + entry.getKey().getNamespace() + "_" + entry.getKey().getPath() + ".nbt");
 			try {
-				FileUtils.writeStringToFile(file, entry.getValue().toString());
+				NbtIo.write(entry.getValue().serialize(), file);
 			} catch (IOException exception) {
 				Polyester.LOGGER.log(Level.WARN, "Could not serialize structure to " + file.getPath());
 			}
