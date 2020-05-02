@@ -8,6 +8,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.datafixer.NbtOps;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.util.BlockRotation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,5 +52,16 @@ public class Structure {
 		});
 
 		return structure;
+	}
+
+	public void rotate() {
+		Map<Position, BlockInformation> rotated = new HashMap<>();
+
+		blocks.forEach((position, information) -> {
+			rotated.put(Position.of(position.asBlockPosition().rotate(BlockRotation.CLOCKWISE_90)), information);
+		});
+
+		blocks.clear();
+		blocks.putAll(rotated);
 	}
 }

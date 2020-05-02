@@ -29,6 +29,8 @@ import java.util.stream.Collectors;
 
 import static com.mojang.brigadier.arguments.BoolArgumentType.bool;
 import static com.mojang.brigadier.arguments.BoolArgumentType.getBool;
+import static com.mojang.brigadier.arguments.IntegerArgumentType.getInteger;
+import static com.mojang.brigadier.arguments.IntegerArgumentType.integer;
 import static net.minecraft.command.arguments.IdentifierArgumentType.getIdentifier;
 import static net.minecraft.command.arguments.IdentifierArgumentType.identifier;
 import static net.minecraft.server.command.CommandManager.argument;
@@ -108,6 +110,14 @@ public class StructureCommands {
 		return 1;
 	}
 
+	private static int rotateStructure(CommandContext<ServerCommandSource> context, Identifier identifier) {
+		Structure structure = StructureRegistry.INSTANCE.getByKey(identifier);
+
+		structure.rotate();
+
+		return 1;
+	}
+
 	public static int undo(CommandContext<ServerCommandSource> context, Player player) {
 		StructureManager.undoStructure(player);
 
@@ -147,6 +157,12 @@ public class StructureCommands {
 							.executes(context -> undo(context, Player.of(context.getSource().getPlayer())))
 					.build();
 
+			LiteralCommandNode<ServerCommandSource> rotateNode =
+					literal("rotate")
+							.then(argument("name", identifier()).suggests(suggestStructures())
+							.executes(context -> rotateStructure(context, getIdentifier(context, "name"))))
+					.build();
+
 			LiteralCommandNode<ServerCommandSource> setNode =
 					literal("set").build();
 
@@ -177,6 +193,7 @@ public class StructureCommands {
 			baseNode.addChild(saveNode);
 			baseNode.addChild(placeNode);
 			baseNode.addChild(undoNode);
+			baseNode.addChild(rotateNode);
 
 			setNode.addChild(cornerNode);
 			setNode.addChild(originNode);

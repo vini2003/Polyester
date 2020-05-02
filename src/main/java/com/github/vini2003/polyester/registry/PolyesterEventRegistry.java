@@ -12,11 +12,14 @@ import com.github.vini2003.polyester.api.structure.StructureManager;
 import com.github.vini2003.polyester.api.structure.command.StructureCommands;
 import com.github.vini2003.polyester.api.structure.registry.StructureRegistry;
 import com.github.vini2003.polyester.api.text.TextBuilder;
+import com.sun.corba.se.impl.logging.POASystemException;
 import net.fabricmc.fabric.api.event.server.ServerTickCallback;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.block.Blocks;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.text.LiteralText;
+import net.minecraft.util.BlockRotation;
 
 import java.io.File;
 
