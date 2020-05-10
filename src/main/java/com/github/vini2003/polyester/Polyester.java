@@ -14,6 +14,11 @@ import net.minecraft.block.entity.FurnaceBlockEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/*
+I recommend you add your dimensions to ((DimensionIdsHolder)world.getLevelProperties()).fabric_getDimensionIds(), that way the Fabric Dimension API will ensure the raw ids stay free
+and remove them from there if they use RESET_UNREGISTER
+ */
+
 public class Polyester implements ModInitializer {
 	public static final String NAME = "Polyester";
 	public static final String IDENTIFIER = "polyester";

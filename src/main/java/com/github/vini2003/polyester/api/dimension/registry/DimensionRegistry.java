@@ -55,13 +55,21 @@ public class DimensionRegistry {
 	}
 
 	public boolean unregister(Identifier key) {
-		trackedValues.remove(key);
-		return ((SimpleRegistryMixin<DimensionType>) Registry.DIMENSION_TYPE).getEntries().values().remove(getByKey(key));
+		if (trackedValues.contains(key)) {
+			trackedValues.remove(key);
+			return ((SimpleRegistryMixin<DimensionType>) Registry.DIMENSION_TYPE).getEntries().values().remove(getByKey(key));
+		} else {
+			return false;
+		}
 	}
 
 	public boolean unregister(DimensionType value) {
-		trackedValues.remove(getByValue(value));
-		return ((SimpleRegistryMixin<DimensionType>) Registry.DIMENSION_TYPE).getEntries().values().remove(value);
+		if (trackedValues.contains(getByValue(value))) {
+			trackedValues.remove(getByValue(value));
+			return ((SimpleRegistryMixin<DimensionType>) Registry.DIMENSION_TYPE).getEntries().values().remove(value);
+		} else {
+			return false;
+		}
 	}
 
 	public boolean isTracked(DimensionType value) {

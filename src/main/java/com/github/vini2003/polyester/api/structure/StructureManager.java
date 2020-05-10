@@ -4,9 +4,7 @@ import com.github.vini2003.polyester.api.block.BlockInformation;
 import com.github.vini2003.polyester.api.data.Position;
 import com.github.vini2003.polyester.api.entity.Player;
 import com.github.vini2003.polyester.api.structure.registry.StructureRegistry;
-import com.github.vini2003.polyester.api.text.TextBuilder;
-import net.minecraft.network.MessageType;
-import net.minecraft.text.LiteralText;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -72,7 +70,7 @@ public class StructureManager {
 			BlockInformation blockInformation = BlockInformation.of(world, position);
 
 			if (!includeAir && blockInformation.hasState() && !blockInformation.getState().isAir()) {
-				structure.bindBlock(Position.of(new BlockPos(anchor.getX() - position.getX(), anchor.getY() - position.getY(), anchor.getZ() - position.getZ())), blockInformation);
+				structure.add(Position.of(new BlockPos(anchor.getX() - position.getX(), anchor.getY() - position.getY(), anchor.getZ() - position.getZ())), blockInformation);
 			}
 		});
 
@@ -88,21 +86,23 @@ public class StructureManager {
 			cachedChanges.computeIfAbsent(player, key -> new ArrayList<>());
 		}
 
-		structure.blocks.forEach(((rawPosition, information) -> {
+		structure.blocks.forEach(((rawPosition, serializedInformation) -> {
 			BlockPos position = rawPosition.asBlockPosition();
 
 			BlockPos newPosition = new BlockPos(anchor.getX() + position.getX(), anchor.getY() - position.getY(), anchor.getZ() + position.getZ());
 
-			BlockInformation oldInformation = BlockInformation.of(player.getWorld(), newPosition);
+			BlockInformation information = BlockInformation.deserialize(serializedInformation);
+
+			BlockInformation oldInformation = BlockInformation.of(world, newPosition);
 
 			if (information.hasState()) {
-				player.getWorld().setBlockState(newPosition, information.getState());
+				world.setBlockState(newPosition, information.getState());
 			}
-			if (information.hasEntity()) {
-				information.getEntity().setLocation(player.getWorld(), newPosition);
 
-				player.getWorld().removeBlockEntity(information.getPosition().asBlockPosition());
-				player.getWorld().addBlockEntity(information.getEntity());
+			if (information.hasEntity()) {
+				information.getEntity().setLocation(world, newPosition);
+
+				world.getBlockEntity(newPosition).fromTag(information.getEntity().toTag(new CompoundTag()));
 			}
 
 			if (player != null) {

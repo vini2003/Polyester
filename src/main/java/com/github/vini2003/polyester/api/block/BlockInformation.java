@@ -207,10 +207,19 @@ public class BlockInformation {
 	 * @return the requested information.
 	 */
 	public static BlockInformation deserialize(CompoundTag tag) {
-		Position position = Position.deserialize((CompoundTag) tag.get("position"));
-		BlockState state = BlockState.deserialize(new Dynamic<>(NbtOps.INSTANCE, tag.get("block_state")));
-		BlockEntity entity = BlockEntity.createFromTag((CompoundTag) tag.get("block_entity"));
+		Position position = null;
+		BlockState state = null;
+		BlockEntity entity = null;
+		if (tag.contains("position")) {
+			position = Position.deserialize((CompoundTag) tag.get("position"));
+		}
+		if (tag.contains("block_state")) {
+			state = BlockState.deserialize(new Dynamic<>(NbtOps.INSTANCE, tag.get("block_state")));
+		}
+		if (tag.contains("block_entity")) {
+			entity = BlockEntity.createFromTag((CompoundTag) tag.get("block_entity"));
+		}
 
-		return new BlockInformation(position, state, state.getBlock(), entity);
+		return new BlockInformation(position, state, state != null ? state.getBlock() : null, entity);
 	}
 }

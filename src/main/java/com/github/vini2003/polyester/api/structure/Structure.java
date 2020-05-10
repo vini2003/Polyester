@@ -2,10 +2,6 @@ package com.github.vini2003.polyester.api.structure;
 
 import com.github.vini2003.polyester.api.block.BlockInformation;
 import com.github.vini2003.polyester.api.data.Position;
-import com.mojang.datafixers.Dynamic;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.datafixer.NbtOps;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.util.BlockRotation;
@@ -14,18 +10,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Structure {
-	public final Map<Position, BlockInformation> blocks = new HashMap<>();
+	public final Map<Position, CompoundTag> blocks = new HashMap<>();
 
-	public void bindBlock(Position position, BlockInformation blockInformation) {
-		blocks.put(position, blockInformation);
-	}
-
-	public void bindInformation(BlockInformation information) {
-		bindBlock(information.getPosition(), information);
-	}
-
-	public void unbindBlock(Position position) {
-		blocks.remove(position);
+	public void add(Position position, BlockInformation blockInformation) {
+		blocks.put(position, blockInformation.serialize());
 	}
 
 	public CompoundTag serialize() {
@@ -34,7 +22,7 @@ public class Structure {
 		ListTag list = new ListTag();
 
 		blocks.forEach((blockPosition, blockInformation) -> {
-			list.add(blockInformation.serialize());
+			list.add(blockInformation);
 		});
 
 		tag.put("list", list);
@@ -48,14 +36,14 @@ public class Structure {
 		((ListTag) tag.get("list")).forEach(data -> {
 			BlockInformation information = BlockInformation.deserialize((CompoundTag) data);
 
-			structure.bindBlock(information.getPosition(),  information);
+			structure.add(information.getPosition(),  information);
 		});
 
 		return structure;
 	}
 
 	public void rotate() {
-		Map<Position, BlockInformation> rotated = new HashMap<>();
+		Map<Position, CompoundTag> rotated = new HashMap<>();
 
 		blocks.forEach((position, information) -> {
 			rotated.put(Position.of(position.asBlockPosition().rotate(BlockRotation.CLOCKWISE_90)), information);
